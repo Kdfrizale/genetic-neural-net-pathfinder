@@ -6,7 +6,7 @@
 namespace KD_PopulationClass {
 	class Population {
 	public:
-		Population(void);
+		Population();
 		KD_NeuralNetworkClass::NeuralNetwork getBest();
 		void breedBestNeuralNet();
 		bool testAll(boardObjects board[SIZE_OF_BOARD][SIZE_OF_BOARD]);

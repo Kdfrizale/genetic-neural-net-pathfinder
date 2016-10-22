@@ -15,6 +15,7 @@ private:
 	void initializeTheGameBoard();
 };
 
+//Create the board and what it contains
 void KD_TesterClass::Tester::initializeTheGameBoard() {
 	for (int i = 0; i < SIZE_OF_BOARD; i++) {
 		for (int j = 0; j < SIZE_OF_BOARD; j++) {
@@ -25,23 +26,19 @@ void KD_TesterClass::Tester::initializeTheGameBoard() {
 
 }
 
-void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &population) {//////////////////////GOOD
-	bool satisfied = false;																						//Copy the game board
+void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &population) {
+	bool satisfied = false;																						
 	boardObjects aGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
-	//initiale theGameBoard
 	initializeTheGameBoard();
-	//std::copy(&theGameBoard[0][0], &theGameBoard[0][0] + SIZE_OF_BOARD*SIZE_OF_BOARD, &aGameBoard[0][0]);
-	memcpy(theGameBoard, aGameBoard, sizeof(aGameBoard));
+	memcpy(aGameBoard, theGameBoard, sizeof(theGameBoard));
 	//loop till a Net completes  the challenge 
 	while (!satisfied) {
 		satisfied =population.testAll(aGameBoard);
 	}
 }
 
-void KD_TesterClass::Tester::displayBestNeuralNet(KD_PopulationClass::Population &population) {///////////////////////GOOD
-																							   //Copy the game board
+void KD_TesterClass::Tester::displayBestNeuralNet(KD_PopulationClass::Population &population) {																						   
 	boardObjects aGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
-	//std::copy(&theGameBoard[0][0], &theGameBoard[0][0] + SIZE_OF_BOARD*SIZE_OF_BOARD, &aGameBoard[0][0]);
-	memcpy(theGameBoard, aGameBoard, sizeof(aGameBoard));
+	memcpy(aGameBoard, theGameBoard, sizeof(theGameBoard));
 	population.getBest().displayProcess(aGameBoard);//show end result
 }

@@ -11,7 +11,7 @@ using namespace KD_PopulationClass;
 
 class Population {
 public:
-	Population(void);
+	Population();
 	KD_NeuralNetworkClass::NeuralNetwork getBest();
 	void breedBestNeuralNet();
 	bool testAll(boardObjects board[SIZE_OF_BOARD][SIZE_OF_BOARD]);
@@ -35,7 +35,16 @@ KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::getBest() {
 }
 
 bool KD_PopulationClass::Population::testAll(boardObjects aGameboard[SIZE_OF_BOARD][SIZE_OF_BOARD]) {////////////GOOD
-	return true;
+    //test each neural net if it has an unititialized fitness AKA was never tested
+	for (int i = 0; i < Population::population.size(); i++) {
+		if (population[i].getFitness() >= SATISFIED_SCORE) {
+			return true;//return true
+		}
+		if (population[i].getFitness() < 0) {
+			population[i].test(aGameboard);
+		}
+	}
+	//breedBestNeuralNet();
 
 }
 
@@ -95,10 +104,9 @@ KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::takeOutRand
 }
 
 
-KD_PopulationClass::Population::Population(void) {///////////////////////////////////////////////////////////////GOOD
-	vector< KD_NeuralNetworkClass::NeuralNetwork> testGroup;
+KD_PopulationClass::Population::Population() {///////////////////////////////////////////////////////////////GOOD
 	for (int i = 0; i < NUMBER_OF_NEURALNETS; i++) {
 		KD_NeuralNetworkClass::NeuralNetwork temp = KD_NeuralNetworkClass::NeuralNetwork();
-		testGroup.push_back(temp);
+		population.push_back(temp);
 	}
 }
