@@ -34,7 +34,7 @@ KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::getBest() {
 	return result;
 }
 
-bool KD_PopulationClass::Population::testAll(boardObjects aGameboard[SIZE_OF_BOARD][SIZE_OF_BOARD]) {////////////GOOD
+bool KD_PopulationClass::Population::testAll(boardObjects aGameboard[SIZE_OF_BOARD][SIZE_OF_BOARD]) {////////////Game board is not copied right
     //test each neural net if it has an unititialized fitness AKA was never tested
 	for (int i = 0; i < Population::population.size(); i++) {
 		if (population[i].getFitness() >= SATISFIED_SCORE) {

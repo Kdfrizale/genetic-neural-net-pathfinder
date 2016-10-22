@@ -30,7 +30,7 @@ void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &p
 	bool satisfied = false;																						
 	boardObjects aGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
 	initializeTheGameBoard();
-	memcpy(aGameBoard, theGameBoard, sizeof(theGameBoard));
+	memcpy(aGameBoard, theGameBoard, sizeof(theGameBoard));/////////////////////////////////Check if this is good
 	//loop till a Net completes  the challenge 
 	while (!satisfied) {
 		satisfied =population.testAll(aGameBoard);
