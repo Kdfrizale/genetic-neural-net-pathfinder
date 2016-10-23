@@ -14,14 +14,17 @@ public:
 	void setFitness(double newFitness);
 	double getFitness();
 	void mutateGenesOfNeurons();
-	void test(boardObjects board[SIZE_OF_BOARD][SIZE_OF_BOARD]);
+	void test();
 	std::vector<double> getOutputs();
 	void giveInputs(std::vector<double> inputs);
 	void displayProcess(boardObjects board[SIZE_OF_BOARD][SIZE_OF_BOARD]);
 	std::vector<std::vector<KD_NeuronClass::Neuron>> m_layers;
 
+	boardObjects theGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
+
 private:
 	double fitness;
+	void initializeTheGameBoard();
 
 	movmentDirection getMove();
 
@@ -32,6 +35,17 @@ void KD_NeuralNetworkClass::NeuralNetwork::setFitness(double newFitness) {
 }
 double KD_NeuralNetworkClass::NeuralNetwork::getFitness() {
 	return NeuralNetwork::fitness;
+
+}
+
+//Create the board and what it contains
+void KD_NeuralNetworkClass::NeuralNetwork::initializeTheGameBoard() {
+	for (int i = 0; i < SIZE_OF_BOARD; i++) {
+		for (int j = 0; j < SIZE_OF_BOARD; j++) {
+			KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = openSpace;
+		}
+	}
+	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2][SIZE_OF_BOARD / 2] = ai;
 
 }
 
@@ -86,7 +100,11 @@ double calculateFitness(int furthestColReached, int distanceFromGoal, int movesR
 	return result;
 }
 
-void KD_NeuralNetworkClass::NeuralNetwork::test(boardObjects board[SIZE_OF_BOARD][SIZE_OF_BOARD]) {/////////////////////////GOOD/////Board must be a copy
+void KD_NeuralNetworkClass::NeuralNetwork::test() {/////////////////////////GOOD/////Board must be a copy
+	initializeTheGameBoard();
+
+
+
 	/*int movesLeft = NUMBER_OF_ALLOWED_MOVES;
 	bool ableToContinue = true;
 	position goalPos;

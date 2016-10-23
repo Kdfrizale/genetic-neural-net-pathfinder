@@ -14,7 +14,7 @@ public:
 	Population();
 	KD_NeuralNetworkClass::NeuralNetwork getBest();
 	void breedBestNeuralNet();
-	bool testAll(boardObjects board[SIZE_OF_BOARD][SIZE_OF_BOARD]);
+	bool testAll();
 
 private:
 	std::vector< KD_NeuralNetworkClass::NeuralNetwork> population;
@@ -29,19 +29,22 @@ private:
 
 };
 
+
+
 KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::getBest() {///////////////////////////////////////////GOOD
 	KD_NeuralNetworkClass::NeuralNetwork result = KD_NeuralNetworkClass::NeuralNetwork::NeuralNetwork();
 	return result;
 }
 
-bool KD_PopulationClass::Population::testAll(boardObjects aGameboard[SIZE_OF_BOARD][SIZE_OF_BOARD]) {////////////Game board is not copied right
+bool KD_PopulationClass::Population::testAll() {////////////Game board is not copied right
+	
     //test each neural net if it has an unititialized fitness AKA was never tested
 	for (int i = 0; i < Population::population.size(); i++) {
 		if (population[i].getFitness() >= SATISFIED_SCORE) {
 			return true;//return true
 		}
 		if (population[i].getFitness() < 0) {
-			population[i].test(aGameboard);
+			population[i].test();
 		}
 	}
 	//breedBestNeuralNet();
