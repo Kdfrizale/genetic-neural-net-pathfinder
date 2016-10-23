@@ -48,6 +48,7 @@ void KD_NeuralNetworkClass::NeuralNetwork::initializeTheGameBoard() {
 	}
 	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2][SIZE_OF_BOARD / 2] = ai;
 	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD - 1][SIZE_OF_BOARD - 1] = goal;
+	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[5+ NUMBER_OF_BLOCKS_ABLE_TO_SEE][5 + NUMBER_OF_BLOCKS_ABLE_TO_SEE] = block;
 
 }
 
@@ -170,10 +171,10 @@ movmentDirection KD_NeuralNetworkClass::NeuralNetwork::getMove() {//////////////
 	}
 
 	switch (placeOfHighest) {
-	case 0: move = up;
-	case 1: move = down;
-	case 2: move = left;
-	case 3: move = right;
+	case 0: move = up; break;
+	case 1: move = down; break;
+	case 2: move = left; break;
+	case 3: move = right; break;
 	}
 	return move;
 }

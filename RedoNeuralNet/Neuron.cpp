@@ -59,14 +59,6 @@ KD_NeuronClass::Neuron::Neuron() {//////////////////////////////////GOOD
 	m_outputValue = 0;
 }
 
-
-
-////////////////////////////////ONLY THIS LEFT//////////////////////////////////////////////////
-
-void KD_NeuronClass::Neuron::mutateInputWeights() {
-
-}
-
 //get the output of each neuron in the layer above it
 //times each one by its weight in m_inputWeights
 //then sum them up
@@ -86,4 +78,22 @@ double KD_NeuronClass::Neuron::updateOutput(std::vector<KD_NeuronClass::Neuron> 
 	}
 	return 0.0;
 }
+
+
+
+////////////////////////////////ONLY THIS LEFT//////////////////////////////////////////////////
+
+void KD_NeuronClass::Neuron::mutateInputWeights() {
+	//for each connection modify it by a random value
+	for (Connection &c : m_inputWeights) {
+		double mutationEffect = ((rand() / RAND_MAX) * MUTATE_FACTOR); //How much the neurons input should change
+		if ((rand() % 10) < 5) {//50 % chance
+			c = c + mutationEffect;
+		}
+		else {
+			c = c - mutationEffect;
+		}
+	}
+}
+
 
