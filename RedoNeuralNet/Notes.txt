@@ -1,6 +1,1 @@
-	boardObjects aGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
-	initializeTheGameBoard();
-	memcpy(aGameBoard, theGameBoard, sizeof(theGameBoard));
-	//loop till a Net completes  the challenge 
-
-	boardObjects * aGameBoardPtr = (boardObjects*)aGameBoard;
+When do the neurons update their output?

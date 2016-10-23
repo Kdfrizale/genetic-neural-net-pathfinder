@@ -7,10 +7,8 @@ namespace KD_TesterClass {
 	public:
 		void testEachNeuralNet(KD_PopulationClass::Population &population);
 		void displayBestNeuralNet(KD_PopulationClass::Population &population);
-		boardObjects theGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
 
 	private:
-		void initializeTheGameBoard();
 	};
 }
 

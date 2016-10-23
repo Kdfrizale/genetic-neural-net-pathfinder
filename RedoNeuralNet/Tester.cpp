@@ -24,8 +24,6 @@ void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &p
 	}
 }
 
-void KD_TesterClass::Tester::displayBestNeuralNet(KD_PopulationClass::Population &population) {																						   
-	boardObjects aGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
-	memcpy(aGameBoard, theGameBoard, sizeof(theGameBoard));
-	population.getBest().displayProcess(aGameBoard);//show end result
+void KD_TesterClass::Tester::displayBestNeuralNet(KD_PopulationClass::Population &population) {	
+	population.getBest().displayProcess();//show end result
 }

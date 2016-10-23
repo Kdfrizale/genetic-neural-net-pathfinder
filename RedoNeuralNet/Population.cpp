@@ -31,12 +31,31 @@ private:
 
 
 
+
+
+
+
+
+
+///////////////////////////Whats left/////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
 KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::getBest() {///////////////////////////////////////////GOOD
 	KD_NeuralNetworkClass::NeuralNetwork result = KD_NeuralNetworkClass::NeuralNetwork::NeuralNetwork();
 	return result;
 }
 
-bool KD_PopulationClass::Population::testAll() {////////////Game board is not copied right
+bool KD_PopulationClass::Population::testAll() {
 	
     //test each neural net if it has an unititialized fitness AKA was never tested
 	for (int i = 0; i < Population::population.size(); i++) {
