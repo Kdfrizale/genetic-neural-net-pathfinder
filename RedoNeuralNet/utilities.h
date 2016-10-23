@@ -30,7 +30,7 @@ const double MUTATE_FACTOR = 0.15;
 const int SIZE_OF_BOARD = 10;
 const int NUMBER_OF_BLOCKS_ABLE_TO_SEE = (sqrt(NUMBER_OF_INPUTS) - 1) / 2;
 const int NUMBER_OF_ALLOWED_MOVES = 50; // amount of moves it should take + C or times K
-const int SATISFIED_SCORE = 50;
+const int SATISFIED_SCORE = 40;
 
 
 

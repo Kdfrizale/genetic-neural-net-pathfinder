@@ -7,7 +7,7 @@ namespace KD_PopulationClass {
 	class Population {
 	public:
 		Population();
-		KD_NeuralNetworkClass::NeuralNetwork getBest();
+		KD_NeuralNetworkClass::NeuralNetwork& getBest();
 		void breedBestNeuralNet();
 		bool testAll();
 
@@ -20,6 +20,7 @@ namespace KD_PopulationClass {
 		void breed(KD_NeuralNetworkClass::NeuralNetwork &aParent, KD_NeuralNetworkClass::NeuralNetwork &bParent, KD_NeuralNetworkClass::NeuralNetwork &child);
 		void sortPopulation(bool sortHighLast);
 		KD_NeuralNetworkClass::NeuralNetwork takeOutRandomNetFromVector(std::vector< KD_NeuralNetworkClass::NeuralNetwork> &netToPullFrom);
+		KD_NeuralNetworkClass::NeuralNetwork pickRandomNetFromVector(std::vector< KD_NeuralNetworkClass::NeuralNetwork> &netToPullFrom);
 
 
 	};

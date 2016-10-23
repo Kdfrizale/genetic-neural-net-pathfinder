@@ -22,6 +22,7 @@ void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &p
 	while (!satisfied) {
 		satisfied =population.testAll();
 	}
+	bool cool = true;
 }
 
 void KD_TesterClass::Tester::displayBestNeuralNet(KD_PopulationClass::Population &population) {	
