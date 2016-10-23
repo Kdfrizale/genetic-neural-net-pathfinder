@@ -22,7 +22,7 @@ const int NUMBER_OF_OUTPUTS = 4;
 const int NUMBER_OF_INPUTS = 49;//how many pixels too look at, centered around ai
 const int NUMBER_OF_HIDDEN_LAYERS = 1;
 const int NUMBER_OF_NEURONS_IN_HIDDEN_LAYER = (int)((NUMBER_OF_INPUTS + NUMBER_OF_OUTPUTS) / 2); //Mean of input and output neurons
-const int NUMBER_OF_NEURALNETS = 15;
+const int NUMBER_OF_NEURALNETS = 1;
 const int NUMBER_OF_BREEDS_PER_TEST = 2;
 const double MUTATE_FACTOR = 0.15;
 

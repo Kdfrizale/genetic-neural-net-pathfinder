@@ -107,10 +107,11 @@ void KD_NeuralNetworkClass::NeuralNetwork::test() {
 		ableToContinue = moveAi(aiMove, aiPos);
 
 		movesLeft--;
+		movesLeft = 0;
 		//update ableCondition
 		//false if newpos = oldpos (it's stuck) or if movesLeft == 0; if ai touches enemy
 		if (ableToContinue) {
-			ableToContinue = (movesLeft <= 0) ||
+			ableToContinue = (movesLeft > 0) &&
 				(aiPos.x_cordinate == startAiPos.x_cordinate || aiPos.y_cordinate == startAiPos.y_cordinate);
 		}
 	}//End of Test
@@ -119,6 +120,7 @@ void KD_NeuralNetworkClass::NeuralNetwork::test() {
 	int distanceFromGoal = abs(aiPos.x_cordinate - goalPos.x_cordinate) + abs(aiPos.y_cordinate - goalPos.y_cordinate);
 	//calculate fitness
 	NeuralNetwork::fitness = calculateFitness(furthestColReached, distanceFromGoal, movesLeft);
+	fitness = 500;
 
 }
 
