@@ -2,7 +2,7 @@
 #include "Neuron.h"
 
 
-enum boardObjects { openSpace, ai, enemy, block, goal };///////Change double value of these to increase nets performance differentiation
+enum boardObjects { enemy, openSpace, ai, block, goal };///////Change double value of these to increase nets performance differentiation
 enum movmentDirection { up, down, left, right };
 
 

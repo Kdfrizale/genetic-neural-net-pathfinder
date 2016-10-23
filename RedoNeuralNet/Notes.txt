@@ -1,1 +1,5 @@
 When do the neurons update their output?
+
+
+
+Neurons need to recieve layerAbove, instead of keeping track of it

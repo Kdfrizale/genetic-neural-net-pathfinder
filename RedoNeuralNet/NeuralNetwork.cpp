@@ -123,6 +123,22 @@ void KD_NeuralNetworkClass::NeuralNetwork::test() {
 
 //get last layer of neurons outputs
 std::vector<double> KD_NeuralNetworkClass::NeuralNetwork::getOutputs() {////////////////////////////////////////GOOD
+	
+	
+	///////////////////////////////////////////////////////////////////////////////////////for every neuron in net, add output value of layer above * connection weight
+	int l = -1;//layer above number
+	for (std::vector<KD_NeuronClass::Neuron> &layer : m_layers) {
+		for (KD_NeuronClass::Neuron &neuron : layer) {
+			if (l != -1) {///////////////////////////////////////////////////////can simplify this by adding a ifInputNeuron to
+				neuron.updateOutput(m_layers[l]);
+			}
+			else {
+				neuron.updateOutput(m_layers[0]);//This is to accomadate input layer not having a layer above, m_layers[0] is not used
+			}
+		}
+		l++;
+	}
+
 	std::vector<double> outputs;
 	std::vector<KD_NeuronClass::Neuron> &lastLayer = m_layers.back();
 	for (KD_NeuronClass::Neuron &neuron : lastLayer) {
@@ -171,7 +187,7 @@ std::vector<KD_NeuronClass::Neuron> createInputLayer(int numberOfNeurons) {/////
 	return result;
 }
 
-std::vector<KD_NeuronClass::Neuron> createRandomLayer(int numberOfNeurons, std::vector<KD_NeuronClass::Neuron> &aLayerAbove) {////////////////////////////GOOD
+std::vector<KD_NeuronClass::Neuron> createRandomLayer(int numberOfNeurons, std::vector<KD_NeuronClass::Neuron> aLayerAbove) {////////////////////////////GOOD
 	std::vector<KD_NeuronClass::Neuron> result;
 	for (int i = 0; i < numberOfNeurons; i++) {
 		KD_NeuronClass::Neuron temp = KD_NeuronClass::Neuron(aLayerAbove);

@@ -16,18 +16,17 @@ public:
 	std::vector<Connection> Neuron::getInputWeights();
 	Neuron::Neuron(std::vector<KD_NeuronClass::Neuron> &aLayerAbove);
 	Neuron::Neuron();
-	std::vector<KD_NeuronClass::Neuron> *m_layerAbove;
+	std::vector<KD_NeuronClass::Neuron> *m_layerAbove;;//////////////////////////////////////////////Confirm this works with out being a pointer
+	double updateOutput(std::vector<KD_NeuronClass::Neuron> &layerAbove);
 	
 private:
 	std::vector<Connection> m_inputWeights;
-	int m_myIndex;
-	double updateOutput();
+	bool isInputNeuron;
 	double m_outputValue;
 	
 };
 
 double KD_NeuronClass::Neuron::getOutputValue() {
-	updateOutput();
 	return m_outputValue;
 }
 void KD_NeuronClass::Neuron::setOutputValue(double valueToSet) {
@@ -37,7 +36,6 @@ void KD_NeuronClass::Neuron::setOutputValue(double valueToSet) {
 void KD_NeuronClass::Neuron::setInputWeights(std::vector<Connection> inputWeights) {
 	m_inputWeights.clear();
 	m_inputWeights = inputWeights;
-	updateOutput();
 }
 
 std::vector<Connection> KD_NeuronClass::Neuron::getInputWeights() {
@@ -52,10 +50,13 @@ KD_NeuronClass::Neuron::Neuron(std::vector<KD_NeuronClass::Neuron> &aLayerAbove)
 		Connection temp = (double)rand() / RAND_MAX;//0...1
 		m_inputWeights.push_back(temp);
 	}
+	m_outputValue = 0;
 }
 
 KD_NeuronClass::Neuron::Neuron() {//////////////////////////////////GOOD
 	m_layerAbove = NULL;
+	isInputNeuron = true;
+	m_outputValue = 0;
 }
 
 
@@ -69,14 +70,16 @@ void KD_NeuronClass::Neuron::mutateInputWeights() {
 //get the output of each neuron in the layer above it
 //times each one by its weight in m_inputWeights
 //then sum them up
-double KD_NeuronClass::Neuron::updateOutput() {/////////////////m_layer not right
-	if (m_layerAbove == NULL) {
+double KD_NeuronClass::Neuron::updateOutput(std::vector<KD_NeuronClass::Neuron> &layerAbove) {
+	if (isInputNeuron) {
 		return m_outputValue;
 	}
 	else {
 		double result = 0;
-		for (Neuron neuronAbove : *m_layerAbove) {
-			result += neuronAbove.updateOutput();
+		int n = 0;
+		for (Neuron neuronAbove : layerAbove) {
+			result += neuronAbove.getOutputValue() * m_inputWeights[n];
+			n++;
 		}
 		m_outputValue = result;
 		return result;
