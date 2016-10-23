@@ -222,8 +222,12 @@ KD_NeuralNetworkClass::NeuralNetwork::NeuralNetwork(void) {/////////////////////
 
 
 //go through each layer, each neuron, using the mutate genes function in Neuron
-void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {//////////////////////////////////////////GOOD
-
+void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {//////////////////////////////////////////Needs confirmation
+	for (std::vector<KD_NeuronClass::Neuron> &layer : m_layers) {
+		for (KD_NeuronClass::Neuron &neuron : layer) {
+			neuron.mutateInputWeights();
+		}
+	}
 }
 
 bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, position &aiPos) {///////////////////////////////////////////Add check for out of bounds, general cleanup

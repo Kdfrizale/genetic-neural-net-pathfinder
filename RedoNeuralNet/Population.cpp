@@ -29,13 +29,28 @@ private:
 
 };
 
+KD_PopulationClass::Population::Population() {///////////////////////////////////////////////////////////////GOOD
+	for (int i = 0; i < NUMBER_OF_NEURALNETS; i++) {
+		KD_NeuralNetworkClass::NeuralNetwork temp = KD_NeuralNetworkClass::NeuralNetwork();
+		population.push_back(temp);
+	}
+}
 
 
+bool KD_PopulationClass::Population::testAll() {
 
+	//test each neural net if it has an unititialized fitness AKA was never tested
+	for (int i = 0; i < Population::population.size(); i++) {
+		if (population[i].getFitness() >= SATISFIED_SCORE) {
+			return true;//return true
+		}
+		if (population[i].getFitness() < 0) {
+			population[i].test();
+		}
+	}
+	breedBestNeuralNet();
 
-
-
-
+}
 
 ///////////////////////////Whats left/////////////////////////////////////////////
 
@@ -55,28 +70,15 @@ KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::getBest() {
 	return result;
 }
 
-bool KD_PopulationClass::Population::testAll() {
-	
-    //test each neural net if it has an unititialized fitness AKA was never tested
-	for (int i = 0; i < Population::population.size(); i++) {
-		if (population[i].getFitness() >= SATISFIED_SCORE) {
-			return true;//return true
-		}
-		if (population[i].getFitness() < 0) {
-			population[i].test();
-		}
-	}
-	//breedBestNeuralNet();
 
-}
 
 bool sortByFitnessHigh(KD_NeuralNetworkClass::NeuralNetwork &aNet, KD_NeuralNetworkClass::NeuralNetwork &bNet) {
-	//return aNet.getFitness() < bNet.getFitness();
+	return aNet.getFitness() < bNet.getFitness();
 	return true;
 }
 
 bool sortByFitnessLow(KD_NeuralNetworkClass::NeuralNetwork &aNet, KD_NeuralNetworkClass::NeuralNetwork &bNet) {
-	//return aNet.getFitness() > bNet.getFitness();
+	return aNet.getFitness() > bNet.getFitness();
 	return false;
 }
 
@@ -100,17 +102,17 @@ void KD_PopulationClass::Population::breedBestNeuralNet() {/////////////////////
 
 std::vector<KD_NeuronClass::Neuron> selectGenesFromLayer(int layerNum, KD_NeuralNetworkClass::NeuralNetwork &aParent, KD_NeuralNetworkClass::NeuralNetwork &bParent) {//////////////////////////GOOD
 	std::vector<KD_NeuronClass::Neuron> result;
-	//const std::vector<KD_NeuronClass::Neuron> aParentLayer = aParent.m_layers[layerNum];
-	//const std::vector<KD_NeuronClass::Neuron> bParentLayer = bParent.m_layers[layerNum];
+	const std::vector<KD_NeuronClass::Neuron> aParentLayer = aParent.m_layers[layerNum];
+	const std::vector<KD_NeuronClass::Neuron> bParentLayer = bParent.m_layers[layerNum];
 
-	//for (int n = 0; n < aParentLayer.size(); n++) {
-	//	if ((rand() % 10) < 5) {//50 % chance
-	//		result.push_back(aParentLayer[n]);
-	//	}
-	//	else {
-	//		result.push_back(bParentLayer[n]);
-	//	}
-	//}
+	for (int n = 0; n < aParentLayer.size(); n++) {
+		if ((rand() % 10) < 5) {//50 % chance
+			result.push_back(aParentLayer[n]);
+		}
+		else {
+			result.push_back(bParentLayer[n]);
+		}
+	}
 	return result;
 }
 
@@ -126,9 +128,3 @@ KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::takeOutRand
 }
 
 
-KD_PopulationClass::Population::Population() {///////////////////////////////////////////////////////////////GOOD
-	for (int i = 0; i < NUMBER_OF_NEURALNETS; i++) {
-		KD_NeuralNetworkClass::NeuralNetwork temp = KD_NeuralNetworkClass::NeuralNetwork();
-		population.push_back(temp);
-	}
-}
