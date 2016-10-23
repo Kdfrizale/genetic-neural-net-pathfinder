@@ -18,9 +18,11 @@ private:
 
 void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &population) {
 	bool satisfied = false;																						
-	
-	while (!satisfied) {
+	int count = 0;
+	while (!satisfied && count < 40) {
 		satisfied =population.testAll();
+		//displayBestNeuralNet(population);
+		count++;
 	}
 	bool cool = true;
 }

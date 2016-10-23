@@ -13,6 +13,7 @@ int main() {
 	myTester.testEachNeuralNet(testGroup);
 
 	myTester.displayBestNeuralNet(testGroup);
+	myTester.displayBestNeuralNet(testGroup);
 
 
 	cout << "Completed" << endl;

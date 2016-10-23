@@ -86,7 +86,7 @@ double KD_NeuronClass::Neuron::updateOutput(std::vector<KD_NeuronClass::Neuron> 
 void KD_NeuronClass::Neuron::mutateInputWeights() {
 	//for each connection modify it by a random value
 	for (Connection &c : m_inputWeights) {
-		double mutationEffect = ((rand() / RAND_MAX) * MUTATE_FACTOR); //How much the neurons input should change
+		double mutationEffect = (((double)rand() / RAND_MAX) * MUTATE_FACTOR); //How much the neurons input should change
 		if ((rand() % 10) < 5) {//50 % chance
 			c = c + mutationEffect;
 		}

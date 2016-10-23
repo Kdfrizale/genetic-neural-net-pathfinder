@@ -43,19 +43,24 @@ double KD_NeuralNetworkClass::NeuralNetwork::getFitness() {
 void KD_NeuralNetworkClass::NeuralNetwork::initializeTheGameBoard() {
 	for (int i = 0; i < SIZE_OF_BOARD; i++) {
 		for (int j = 0; j < SIZE_OF_BOARD; j++) {
-			KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = openSpace;
+			if ((i == SIZE_OF_BOARD - 1 || j == SIZE_OF_BOARD - 1) || ( i ==0 || j ==0))
+				KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = outOfBounds;
+			else if(i ==4 || j ==4)
+				KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = block;
+			else 
+				KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = openSpace;
+			
 		}
 	}
 	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2][SIZE_OF_BOARD / 2] = ai;
-	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD - 1][SIZE_OF_BOARD - 1] = goal;
-	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[5+ NUMBER_OF_BLOCKS_ABLE_TO_SEE][5 + NUMBER_OF_BLOCKS_ABLE_TO_SEE] = block;
+
+	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2 + 1][SIZE_OF_BOARD / 2 + 1] = goal;
 
 }
 
 //Calculate fitness with Weighted preferences
-double calculateFitness(int furthestColReached, int distanceFromGoal, int movesRemaining) {///////GOOD
-	double result = (furthestColReached*FITNESS_CALIBRATOR_COL_REACHED - distanceFromGoal
-		+ FITNESS_CALIBRATOR_MOVES_REMAINING*movesRemaining);
+double calculateFitness(int distanceFromGoal, int movesRemaining) {///////GOOD
+	double result = (FITNESS_CALIBRATOR_MOVES_REMAINING*movesRemaining - distanceFromGoal + FITNESS_CALIBRATOR_COL_REACHED);
 	return result;
 }
 
@@ -105,22 +110,25 @@ void KD_NeuralNetworkClass::NeuralNetwork::test() {
 
 		//update ai pos
 		ableToContinue = moveAi(aiMove, aiPos);
+		if (aiPos.x_cordinate == 6 && aiPos.y_cordinate == 6) {
+			bool gdsa = true;
+		}
 
 		movesLeft--;
 		//update ableCondition
 		//false if newpos = oldpos (it's stuck) or if movesLeft == 0; if ai touches enemy
 		if (ableToContinue) {
 			ableToContinue = (movesLeft > 0) &&
-				(aiPos.x_cordinate == startAiPos.x_cordinate || aiPos.y_cordinate == startAiPos.y_cordinate) &&
+				!(aiPos.x_cordinate == startAiPos.x_cordinate && aiPos.y_cordinate == startAiPos.y_cordinate) &&
 				!(aiPos.x_cordinate == goalPos.x_cordinate && aiPos.y_cordinate == goalPos.y_cordinate);
 		}
 	}//End of Test
 
-	int furthestColReached = SIZE_OF_BOARD - aiPos.x_cordinate;
 	int distanceFromGoal = abs(aiPos.x_cordinate - goalPos.x_cordinate) + abs(aiPos.y_cordinate - goalPos.y_cordinate);
 	//calculate fitness
-	NeuralNetwork::fitness = calculateFitness(furthestColReached, distanceFromGoal, movesLeft);
-
+	bool atGoal = (aiPos.x_cordinate == goalPos.x_cordinate) && (aiPos.y_cordinate == goalPos.y_cordinate);
+	NeuralNetwork::fitness = (atGoal) ? calculateFitness(distanceFromGoal, movesLeft) : calculateFitness(distanceFromGoal, 0);
+	bool ga = true;
 }
 
 //get last layer of neurons outputs
@@ -229,38 +237,58 @@ void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {/////////////
 	}
 }
 
-bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, position &aiPos) {///////////////////////////////////////////Add check for out of bounds, general cleanup
+bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, position &aiPos) {
 	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate] = openSpace;
 	switch (move) {
 	case up:
-		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == openSpace) {
+		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == openSpace) {////////////////////////////////////////allow the ai to move onto the goal
+			aiPos.y_cordinate++;
+			break;
+		}
+		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == goal) {////////////////////////////////////////allow the ai to move onto the goal
 			aiPos.y_cordinate++;
 			break;
 		}
 			
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == enemy)
 			return false;//Dead
+		break;
 	case down:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate - 1] == openSpace) {
 			aiPos.y_cordinate--;
 			break;
 		}
+		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate - 1] == goal) {
+			aiPos.y_cordinate--;
+			break;
+		}
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate - 1] == enemy)
 			return false;//Dead
+		break;
 	case left:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate - 1][aiPos.y_cordinate] == openSpace) {
 			aiPos.x_cordinate--;
 			break;
 		}
+		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate - 1][aiPos.y_cordinate] == goal) {
+			aiPos.x_cordinate--;
+			break;
+		}
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate - 1][aiPos.y_cordinate] == enemy)
 			return false;//Dead
+		break;
 	case right:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate + 1][aiPos.y_cordinate] == openSpace) {
 			aiPos.x_cordinate++;
 			break;
-		}	
+		}
+		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate + 1][aiPos.y_cordinate] == goal) {
+			aiPos.x_cordinate++;
+			break;
+		}
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate + 1][aiPos.y_cordinate] == enemy)
 			return false;//Dead
+		break;
 	}
 	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate] = ai;
 	return true;
@@ -319,11 +347,12 @@ std::vector<movmentDirection> KD_NeuralNetworkClass::NeuralNetwork::displayProce
 		ableToContinue = moveAi(aiMove, aiPos);
 
 		movesLeft--;
+		bool atGoal = (aiPos.x_cordinate == goalPos.x_cordinate && aiPos.y_cordinate == goalPos.y_cordinate);
 		//update ableCondition
 		//false if newpos = oldpos (it's stuck) or if movesLeft == 0; if ai touches enemy
 		if (ableToContinue) {
 			ableToContinue = (movesLeft > 0) &&
-				(aiPos.x_cordinate == startAiPos.x_cordinate || aiPos.y_cordinate == startAiPos.y_cordinate) &&
+				!(aiPos.x_cordinate == startAiPos.x_cordinate && aiPos.y_cordinate == startAiPos.y_cordinate) &&
 				!(aiPos.x_cordinate == goalPos.x_cordinate && aiPos.y_cordinate == goalPos.y_cordinate);
 		}
 	}//End of Test

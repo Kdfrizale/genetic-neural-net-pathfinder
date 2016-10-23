@@ -2,7 +2,7 @@
 #include "Neuron.h"
 
 
-enum boardObjects { enemy, openSpace, ai, block, goal };///////Change double value of these to increase nets performance differentiation
+enum boardObjects { enemy = -10, outOfBounds = -5, block = 0, ai = 1, openSpace = 5,  goal = 100 };///////Change double value of these to increase nets performance differentiation
 enum movmentDirection { up, down, left, right };
 
 
@@ -14,7 +14,7 @@ struct position {
 
 const int UNINITIALZIED = -1;
 
-const double FITNESS_CALIBRATOR_COL_REACHED = 5.0;//Value of reaching the right side
+const double FITNESS_CALIBRATOR_COL_REACHED = 20;//Value of reaching the right side
 const double FITNESS_CALIBRATOR_MOVES_REMAINING = 10.0;//Value of reaching the goal quickly
 
 

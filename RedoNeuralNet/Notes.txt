@@ -1,2 +1,4 @@
+how to make the board
 
+how to only allow movement on the board
 
