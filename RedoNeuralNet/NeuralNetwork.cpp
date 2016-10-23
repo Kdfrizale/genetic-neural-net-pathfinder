@@ -171,7 +171,7 @@ std::vector<KD_NeuronClass::Neuron> createInputLayer(int numberOfNeurons) {/////
 	return result;
 }
 
-std::vector<KD_NeuronClass::Neuron> createRandomLayer(int numberOfNeurons, std::vector<KD_NeuronClass::Neuron> aLayerAbove) {////////////////////////////GOOD
+std::vector<KD_NeuronClass::Neuron> createRandomLayer(int numberOfNeurons, std::vector<KD_NeuronClass::Neuron> &aLayerAbove) {////////////////////////////GOOD
 	std::vector<KD_NeuronClass::Neuron> result;
 	for (int i = 0; i < numberOfNeurons; i++) {
 		KD_NeuronClass::Neuron temp = KD_NeuronClass::Neuron(aLayerAbove);

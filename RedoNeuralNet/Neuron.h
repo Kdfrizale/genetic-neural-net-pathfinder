@@ -15,6 +15,8 @@ namespace KD_NeuronClass {
 		Neuron::Neuron(std::vector<Neuron> &aLayerAbove);
 		Neuron::Neuron();
 		std::vector<Neuron> *m_layerAbove;
+
+		
 	private:
 		std::vector<Connection> m_inputWeights;
 		int m_myIndex;
