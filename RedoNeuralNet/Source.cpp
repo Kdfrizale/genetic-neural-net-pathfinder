@@ -12,6 +12,8 @@ int main() {
 	KD_TesterClass::Tester myTester;
 	myTester.testEachNeuralNet(testGroup);
 
+	myTester.displayBestNeuralNet(testGroup);
+
 
 	cout << "Completed" << endl;
 }

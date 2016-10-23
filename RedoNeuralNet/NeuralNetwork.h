@@ -15,7 +15,7 @@ namespace KD_NeuralNetworkClass {
 		void test();
 		std::vector<double> getOutputs();
 		void giveInputs(std::vector<double> inputs);
-		void displayProcess();
+		std::vector<movmentDirection> displayProcess();
 		std::vector<std::vector<KD_NeuronClass::Neuron>> m_layers;
 
 		boardObjects theGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];

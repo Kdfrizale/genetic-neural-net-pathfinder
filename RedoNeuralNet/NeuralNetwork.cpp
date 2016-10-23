@@ -17,7 +17,7 @@ public:
 	void test();
 	std::vector<double> getOutputs();
 	void giveInputs(std::vector<double> inputs);
-	void displayProcess();
+	std::vector<movmentDirection> displayProcess();
 	std::vector<std::vector<KD_NeuronClass::Neuron>> m_layers;
 
 	boardObjects theGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
@@ -111,7 +111,8 @@ void KD_NeuralNetworkClass::NeuralNetwork::test() {
 		//false if newpos = oldpos (it's stuck) or if movesLeft == 0; if ai touches enemy
 		if (ableToContinue) {
 			ableToContinue = (movesLeft > 0) &&
-				(aiPos.x_cordinate == startAiPos.x_cordinate || aiPos.y_cordinate == startAiPos.y_cordinate);
+				(aiPos.x_cordinate == startAiPos.x_cordinate || aiPos.y_cordinate == startAiPos.y_cordinate) &&
+				!(aiPos.x_cordinate == goalPos.x_cordinate && aiPos.y_cordinate == goalPos.y_cordinate);
 		}
 	}//End of Test
 
@@ -267,7 +268,65 @@ bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, positio
 
 
 
-void KD_NeuralNetworkClass::NeuralNetwork::displayProcess() {
+std::vector<movmentDirection> KD_NeuralNetworkClass::NeuralNetwork::displayProcess() {
 	//just like test, but record each movement, and possible add to GUI
+	std::vector<movmentDirection> allMovesTaken;
 	initializeTheGameBoard();
+
+	int movesLeft = NUMBER_OF_ALLOWED_MOVES;
+	bool ableToContinue = true;
+	position goalPos;
+	position aiPos;
+	position startAiPos;
+	std::vector<double> boardInfoAvailableToAI;
+	//find ai and goal position in board
+	for (int x = 0; x < SIZE_OF_BOARD; x++) {
+		for (int y = 0; y < SIZE_OF_BOARD; y++) {
+			if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[x][y] == ai) {
+				aiPos.x_cordinate = x;
+				aiPos.y_cordinate = y;
+				break;
+			}
+			if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[x][y] == goal) {
+				goalPos.x_cordinate = x;
+				goalPos.y_cordinate = y;
+			}
+		}
+	}
+
+	while (ableToContinue) {//Start Test
+		boardInfoAvailableToAI.clear();
+		startAiPos = aiPos;
+		int xLowerRange = aiPos.x_cordinate - NUMBER_OF_BLOCKS_ABLE_TO_SEE;
+		int xUpperRange = aiPos.x_cordinate + NUMBER_OF_BLOCKS_ABLE_TO_SEE;
+		int yLowerRange = aiPos.y_cordinate - NUMBER_OF_BLOCKS_ABLE_TO_SEE;
+		int yUpperRange = aiPos.y_cordinate + NUMBER_OF_BLOCKS_ABLE_TO_SEE;
+
+		//get area aroud ai pos in every direction
+		for (int x = xLowerRange; x <= xUpperRange; x++) {
+			for (int y = yLowerRange; y <= yUpperRange; y++) {
+				boardInfoAvailableToAI.push_back(KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[x][y]);
+			}
+		}
+		//feed info to input neurons
+		giveInputs(boardInfoAvailableToAI);
+
+		//get output of net;; and decide on direction to move
+		movmentDirection aiMove = getMove();
+		allMovesTaken.push_back(aiMove);
+
+		//update ai pos
+		ableToContinue = moveAi(aiMove, aiPos);
+
+		movesLeft--;
+		//update ableCondition
+		//false if newpos = oldpos (it's stuck) or if movesLeft == 0; if ai touches enemy
+		if (ableToContinue) {
+			ableToContinue = (movesLeft > 0) &&
+				(aiPos.x_cordinate == startAiPos.x_cordinate || aiPos.y_cordinate == startAiPos.y_cordinate) &&
+				!(aiPos.x_cordinate == goalPos.x_cordinate && aiPos.y_cordinate == goalPos.y_cordinate);
+		}
+	}//End of Test
+	return allMovesTaken;
+
 }
