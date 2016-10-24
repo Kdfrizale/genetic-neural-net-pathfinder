@@ -82,6 +82,8 @@ bool KD_PopulationClass::Population::testAll(std::vector<std::string> boardInfo)
 KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::pickRandomNetFromVector(std::vector< KD_NeuralNetworkClass::NeuralNetwork> &netToPullFrom) {
 	int place = rand() % netToPullFrom.size();
 	KD_NeuralNetworkClass::NeuralNetwork result = netToPullFrom.at(place);
+	population.push_back(netToPullFrom.at(place));
+	netToPullFrom.erase(netToPullFrom.begin() + place);///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////confirm this
 	return result;
 }
 
