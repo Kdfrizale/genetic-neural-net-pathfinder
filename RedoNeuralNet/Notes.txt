@@ -1,4 +1,4 @@
-how to make the board
 
-how to only allow movement on the board
+how to save best NeuralNet or all neural nets
 
+how to test THE SAME neural net on different boards

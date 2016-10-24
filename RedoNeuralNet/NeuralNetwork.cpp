@@ -14,17 +14,17 @@ public:
 	void setFitness(double newFitness);
 	double getFitness();
 	void mutateGenesOfNeurons();
-	void test();
+	void test(std::vector<std::string> boardInfo);
 	std::vector<double> getOutputs();
 	void giveInputs(std::vector<double> inputs);
-	std::vector<movmentDirection> displayProcess();
+	std::vector<movmentDirection> displayProcess(std::vector<std::string> boardInfo);
 	std::vector<std::vector<KD_NeuronClass::Neuron>> m_layers;
 
 	boardObjects theGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
 
 private:
 	double fitness;
-	void initializeTheGameBoard();
+	void initializeTheGameBoard(std::vector<std::string> boardInfo);
 	bool moveAi(movmentDirection move, position &aiPos);
 
 	movmentDirection getMove();
@@ -38,23 +38,64 @@ double KD_NeuralNetworkClass::NeuralNetwork::getFitness() {
 	return NeuralNetwork::fitness;
 
 }
+boardObjects getBoardObjectFromStringVector(std::vector<std::string> &boardInfo) {//could use hash table
+	std::string temp;
+	boardObjects result;
+	while (true) {
+		temp = boardInfo.front();
+		if (temp == "emeny") {
+			result = enemy;
+			break;
+		}
+		else if (temp == "outOfBounds") {
+			result = outOfBounds;
+			break;
+		}
+		else if (temp == "block") {
+			result = block;
+			break;
+		}
+		else if (temp == "ai") {
+			result = ai;
+			break;
+		}
+		else if (temp == "openSpace") {
+			result = openSpace;
+			break;
+		}
+		else if (temp == "goal") {
+			result = goal;
+			break;
+		}
+		else {
+			//Invalid data entered
+			boardInfo.erase(boardInfo.begin());
+		}
 
+	}
+	
+	boardInfo.erase(boardInfo.begin());
+	return result;
+}
 //Create the board and what it contains
-void KD_NeuralNetworkClass::NeuralNetwork::initializeTheGameBoard() {
+void KD_NeuralNetworkClass::NeuralNetwork::initializeTheGameBoard(std::vector<std::string> boardInfo) {/////////////////////////////////////////////////////////////////fix this to accept outside input
 	for (int i = 0; i < SIZE_OF_BOARD; i++) {
 		for (int j = 0; j < SIZE_OF_BOARD; j++) {
-			if ((i == SIZE_OF_BOARD - 1 || j == SIZE_OF_BOARD - 1) || ( i ==0 || j ==0))
+			boardObjects temp = getBoardObjectFromStringVector(boardInfo);
+			KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = temp;
+
+			/*if ((i == SIZE_OF_BOARD - 1 || j == SIZE_OF_BOARD - 1) || ( i ==0 || j ==0))
 				KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = outOfBounds;
 			else if(i ==4 || j ==4)
 				KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = block;
 			else 
 				KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = openSpace;
-			
+			*/
 		}
 	}
-	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2][SIZE_OF_BOARD / 2] = ai;
+	//KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2][SIZE_OF_BOARD / 2] = ai;
 
-	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2 + 1][SIZE_OF_BOARD / 2 + 1] = goal;
+	//KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2 + 2][SIZE_OF_BOARD / 2 -1] = goal;
 
 }
 
@@ -64,8 +105,8 @@ double calculateFitness(int distanceFromGoal, int movesRemaining) {///////GOOD
 	return result;
 }
 
-void KD_NeuralNetworkClass::NeuralNetwork::test() {
-	initializeTheGameBoard();
+void KD_NeuralNetworkClass::NeuralNetwork::test(std::vector<std::string> boardInfo) {
+	initializeTheGameBoard(boardInfo);
 
 	int movesLeft = NUMBER_OF_ALLOWED_MOVES;
 	bool ableToContinue = true;
@@ -296,10 +337,10 @@ bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, positio
 
 
 
-std::vector<movmentDirection> KD_NeuralNetworkClass::NeuralNetwork::displayProcess() {
+std::vector<movmentDirection> KD_NeuralNetworkClass::NeuralNetwork::displayProcess(std::vector<std::string> boardInfo) {
 	//just like test, but record each movement, and possible add to GUI
 	std::vector<movmentDirection> allMovesTaken;
-	initializeTheGameBoard();
+	initializeTheGameBoard(boardInfo);
 
 	int movesLeft = NUMBER_OF_ALLOWED_MOVES;
 	bool ableToContinue = true;

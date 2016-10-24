@@ -14,7 +14,7 @@ public:
 	Population();
 	KD_NeuralNetworkClass::NeuralNetwork& getBest();
 	void breedBestNeuralNet();
-	bool testAll();
+	bool testAll(std::vector<std::string> boardInfo);
 
 private:
 	std::vector< KD_NeuralNetworkClass::NeuralNetwork> population;
@@ -60,7 +60,7 @@ void KD_PopulationClass::Population::sortPopulation(bool sortHighLast) {////////
 	std::sort(population.begin(), population.end(), sortByFitnessLow);
 }
 
-bool KD_PopulationClass::Population::testAll() {
+bool KD_PopulationClass::Population::testAll(std::vector<std::string> boardInfo) {
 
 	//test each neural net if it has an unititialized fitness AKA was never tested
 	for (int i = 0; i < Population::population.size(); i++) {
@@ -68,7 +68,7 @@ bool KD_PopulationClass::Population::testAll() {
 			return true;//return true
 		}
 		if (population[i].getFitness() == -1) {
-			population[i].test();
+			population[i].test(boardInfo);
 		}
 	}
 	breedBestNeuralNet();

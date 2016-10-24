@@ -26,7 +26,7 @@ const int NUMBER_OF_NEURALNETS = 15;
 const int NUMBER_OF_BREEDS_PER_TEST = 2;
 const double MUTATE_FACTOR = 0.15;
 
-
+const char* const NAME_OF_BOARD = "Testdata.txt";
 const int SIZE_OF_BOARD = 10;
 const int NUMBER_OF_BLOCKS_ABLE_TO_SEE = (sqrt(NUMBER_OF_INPUTS) - 1) / 2;
 const int NUMBER_OF_ALLOWED_MOVES = 50; // amount of moves it should take + C or times K

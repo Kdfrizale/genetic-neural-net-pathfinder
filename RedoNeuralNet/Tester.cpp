@@ -1,3 +1,7 @@
+#include <fstream>
+#include <iostream>
+#include <string>
+
 #include "Tester.h"
 #include "utilities.h"
 #include "Population.h"
@@ -14,13 +18,26 @@ public:
 private:
 };
 
+vector<string> getBoardInfo() {
+	ifstream  file (NAME_OF_BOARD);
+	vector<string> boardInfo;
+	string line;
+	while (!file.eof()) {
+		getline(file, line, ',');
+		boardInfo.push_back(line);
+		
+	}
+	//break up by comma
+	return boardInfo;
+}
+
 
 
 void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &population) {
 	bool satisfied = false;																						
 	int count = 0;
 	while (!satisfied && count < 40) {
-		satisfied =population.testAll();
+		satisfied =population.testAll(getBoardInfo());
 		//displayBestNeuralNet(population);
 		count++;
 	}
@@ -28,5 +45,5 @@ void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &p
 }
 
 void KD_TesterClass::Tester::displayBestNeuralNet(KD_PopulationClass::Population &population) {	
-	population.getBest().displayProcess();//show end result
+	population.getBest().displayProcess(getBoardInfo());//show end result
 }

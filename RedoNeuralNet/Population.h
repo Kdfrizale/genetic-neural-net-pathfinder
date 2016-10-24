@@ -9,7 +9,7 @@ namespace KD_PopulationClass {
 		Population();
 		KD_NeuralNetworkClass::NeuralNetwork& getBest();
 		void breedBestNeuralNet();
-		bool testAll();
+		bool testAll(std::vector<std::string> boardInfo);
 
 	private:
 		std::vector< KD_NeuralNetworkClass::NeuralNetwork> population;
