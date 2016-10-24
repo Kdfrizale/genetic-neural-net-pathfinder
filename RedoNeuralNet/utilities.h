@@ -1,9 +1,10 @@
 #pragma once
+#include <string>
 #include "Neuron.h"
 
 
 enum boardObjects { enemy = -10, outOfBounds = -5, block = 0, ai = 1, openSpace = 5,  goal = 100 };///////Change double value of these to increase nets performance differentiation
-enum movmentDirection { up, down, left, right };
+enum movmentDirection { goUp, goDown, goLeft, goRight };
 
 
 struct position {
@@ -19,18 +20,23 @@ const double FITNESS_CALIBRATOR_MOVES_REMAINING = 10.0;//Value of reaching the g
 
 
 const int NUMBER_OF_OUTPUTS = 4;
-const int NUMBER_OF_INPUTS = 49;//how many pixels too look at, centered around ai
+const int NUMBER_OF_INPUTS = 25;//how many pixels too look at, centered around ai
 const int NUMBER_OF_HIDDEN_LAYERS = 1;
 const int NUMBER_OF_NEURONS_IN_HIDDEN_LAYER = (int)((NUMBER_OF_INPUTS + NUMBER_OF_OUTPUTS) / 2); //Mean of input and output neurons
-const int NUMBER_OF_NEURALNETS = 15;
-const int NUMBER_OF_BREEDS_PER_TEST = 2;
-const double MUTATE_FACTOR = 0.15;
+const int NUMBER_OF_NEURALNETS = 50;//15
+const int NUMBER_OF_BREEDS_PER_TEST = 8;//2
+const double MUTATE_FACTOR = 0.2;//.15
 
-const char* const NAME_OF_BOARD = "Testdata.txt";
+
 const int SIZE_OF_BOARD = 10;
 const int NUMBER_OF_BLOCKS_ABLE_TO_SEE = (sqrt(NUMBER_OF_INPUTS) - 1) / 2;
 const int NUMBER_OF_ALLOWED_MOVES = 50; // amount of moves it should take + C or times K
 const int SATISFIED_SCORE = 40;
+const int NUMBER_OF_TRIALS_PER_NET = 50;
+
+const std::string NAME_OF_BOARD = "Testdata.txt";
+const std::string NAME_OF_BOARD2 = "Testdata2.txt";
+const std::string NAME_OF_BOARD3 = "Testdata3.txt";
 
 
 

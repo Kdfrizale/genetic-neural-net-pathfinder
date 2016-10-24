@@ -120,7 +120,6 @@ void KD_NeuralNetworkClass::NeuralNetwork::test(std::vector<std::string> boardIn
 			if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[x][y] == ai) {
 				aiPos.x_cordinate = x;
 				aiPos.y_cordinate = y;
-				break;
 			}
 			if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[x][y] == goal) {
 				goalPos.x_cordinate = x;
@@ -151,9 +150,6 @@ void KD_NeuralNetworkClass::NeuralNetwork::test(std::vector<std::string> boardIn
 
 		//update ai pos
 		ableToContinue = moveAi(aiMove, aiPos);
-		if (aiPos.x_cordinate == 6 && aiPos.y_cordinate == 6) {
-			bool gdsa = true;
-		}
 
 		movesLeft--;
 		//update ableCondition
@@ -169,7 +165,6 @@ void KD_NeuralNetworkClass::NeuralNetwork::test(std::vector<std::string> boardIn
 	//calculate fitness
 	bool atGoal = (aiPos.x_cordinate == goalPos.x_cordinate) && (aiPos.y_cordinate == goalPos.y_cordinate);
 	NeuralNetwork::fitness = (atGoal) ? calculateFitness(distanceFromGoal, movesLeft) : calculateFitness(distanceFromGoal, 0);
-	bool ga = true;
 }
 
 //get last layer of neurons outputs
@@ -221,10 +216,10 @@ movmentDirection KD_NeuralNetworkClass::NeuralNetwork::getMove() {//////////////
 	}
 
 	switch (placeOfHighest) {
-	case 0: move = up; break;
-	case 1: move = down; break;
-	case 2: move = left; break;
-	case 3: move = right; break;
+	case 0: move = goUp; break;
+	case 1: move = goDown; break;
+	case 2: move = goLeft; break;
+	case 3: move = goRight; break;
 	}
 	return move;
 }
@@ -270,7 +265,7 @@ KD_NeuralNetworkClass::NeuralNetwork::NeuralNetwork(void) {/////////////////////
 
 
 //go through each layer, each neuron, using the mutate genes function in Neuron
-void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {//////////////////////////////////////////Needs confirmation
+void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {
 	for (std::vector<KD_NeuronClass::Neuron> &layer : m_layers) {
 		for (KD_NeuronClass::Neuron &neuron : layer) {
 			neuron.mutateInputWeights();
@@ -278,15 +273,15 @@ void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {/////////////
 	}
 }
 
-bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, position &aiPos) {
+bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, position &aiPos) {//////////////////////////////////////////////////////////clean this 
 	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate] = openSpace;
 	switch (move) {
-	case up:
-		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == openSpace) {////////////////////////////////////////allow the ai to move onto the goal
+	case goUp:
+		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == openSpace) {
 			aiPos.y_cordinate++;
 			break;
 		}
-		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == goal) {////////////////////////////////////////allow the ai to move onto the goal
+		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == goal) {
 			aiPos.y_cordinate++;
 			break;
 		}
@@ -294,7 +289,7 @@ bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, positio
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == enemy)
 			return false;//Dead
 		break;
-	case down:
+	case goDown:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate - 1] == openSpace) {
 			aiPos.y_cordinate--;
 			break;
@@ -306,7 +301,7 @@ bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, positio
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate - 1] == enemy)
 			return false;//Dead
 		break;
-	case left:
+	case goLeft:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate - 1][aiPos.y_cordinate] == openSpace) {
 			aiPos.x_cordinate--;
 			break;
@@ -318,7 +313,7 @@ bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, positio
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate - 1][aiPos.y_cordinate] == enemy)
 			return false;//Dead
 		break;
-	case right:
+	case goRight:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate + 1][aiPos.y_cordinate] == openSpace) {
 			aiPos.x_cordinate++;
 			break;
@@ -354,7 +349,6 @@ std::vector<movmentDirection> KD_NeuralNetworkClass::NeuralNetwork::displayProce
 			if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[x][y] == ai) {
 				aiPos.x_cordinate = x;
 				aiPos.y_cordinate = y;
-				break;
 			}
 			if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[x][y] == goal) {
 				goalPos.x_cordinate = x;
