@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <vector>
+#include <fstream>
 #include "Neuron.h"
 
 
@@ -15,8 +17,11 @@ struct position {
 
 const int UNINITIALZIED = -1;
 
-const double FITNESS_CALIBRATOR_COL_REACHED = 20;//Value of reaching the right side
+const double FITNESS_CALIBRATOR_COL_REACHED = 10.0;//Value of reaching the right side
 const double FITNESS_CALIBRATOR_MOVES_REMAINING = 10.0;//Value of reaching the goal quickly
+const double FITNESS_CALIBRATOR_MOVES_TAKEN = 2.0;
+const double FITNESS_CALIBRATOR_DISTANCE_FROM_START = 4.0;
+const double FITNESS_CALIBRATOR_DISTANCE_FROM_GOAL = 10.0;
 
 
 const int NUMBER_OF_OUTPUTS = 4;
@@ -44,5 +49,4 @@ const std::string NAME_OF_BOARD3 = "Testdata3.txt";
 //Fill in board
 
 
-
-
+std::vector<std::string> getBoardInfo(const std::string filename);

@@ -1,4 +1,7 @@
 
 how to save best NeuralNet or all neural nets
 
-how to test THE SAME neural net on different boards
+(think is done)how to test THE SAME neural net on different boards
+
+
+only mutute X% of the genes, not all of them

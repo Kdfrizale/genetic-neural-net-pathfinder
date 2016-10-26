@@ -100,8 +100,10 @@ void KD_NeuralNetworkClass::NeuralNetwork::initializeTheGameBoard(std::vector<st
 }
 
 //Calculate fitness with Weighted preferences
-double calculateFitness(int distanceFromGoal, int movesRemaining) {///////GOOD
-	double result = (FITNESS_CALIBRATOR_MOVES_REMAINING*movesRemaining - distanceFromGoal + FITNESS_CALIBRATOR_COL_REACHED);
+double calculateFitness(int distanceFromGoal, int movesRemaining, int movesTaken, int distanceFromStart, int furthestColReached) {///////GOOD
+	double result = (FITNESS_CALIBRATOR_MOVES_REMAINING*movesRemaining + FITNESS_CALIBRATOR_COL_REACHED*furthestColReached
+		+ FITNESS_CALIBRATOR_MOVES_TAKEN*movesTaken + FITNESS_CALIBRATOR_DISTANCE_FROM_START*distanceFromStart
+		- FITNESS_CALIBRATOR_DISTANCE_FROM_GOAL*distanceFromGoal);
 	return result;
 }
 
@@ -113,6 +115,7 @@ void KD_NeuralNetworkClass::NeuralNetwork::test(std::vector<std::string> boardIn
 	position goalPos;
 	position aiPos;
 	position startAiPos;
+	position beginningAiPos;
 	std::vector<double> boardInfoAvailableToAI;
 	//find ai and goal position in board
 	for (int x = 0; x < SIZE_OF_BOARD; x++) {
@@ -127,6 +130,7 @@ void KD_NeuralNetworkClass::NeuralNetwork::test(std::vector<std::string> boardIn
 			}
 		}
 	}
+	beginningAiPos = aiPos;
 
 	while (ableToContinue) {//Start Test
 		boardInfoAvailableToAI.clear();
@@ -162,9 +166,14 @@ void KD_NeuralNetworkClass::NeuralNetwork::test(std::vector<std::string> boardIn
 	}//End of Test
 
 	int distanceFromGoal = abs(aiPos.x_cordinate - goalPos.x_cordinate) + abs(aiPos.y_cordinate - goalPos.y_cordinate);
+	int distanceFromStart = abs(aiPos.x_cordinate - beginningAiPos.x_cordinate) + abs(aiPos.y_cordinate - beginningAiPos.y_cordinate);;
+	int movesTaken = NUMBER_OF_ALLOWED_MOVES - movesLeft;
+	int furthestColReached = abs(aiPos.x_cordinate - goalPos.x_cordinate);//////////////////////////////////////////////////////////////////////////////////////////////////////////Should I also add row?
+	
 	//calculate fitness
 	bool atGoal = (aiPos.x_cordinate == goalPos.x_cordinate) && (aiPos.y_cordinate == goalPos.y_cordinate);
-	NeuralNetwork::fitness = (atGoal) ? calculateFitness(distanceFromGoal, movesLeft) : calculateFitness(distanceFromGoal, 0);
+	NeuralNetwork::fitness += (atGoal) ? calculateFitness(distanceFromGoal, movesLeft, movesTaken, distanceFromStart, furthestColReached) /////////////////////////////////////////////////////Verify this, does += work?
+		: calculateFitness(distanceFromGoal, 0, movesTaken, distanceFromStart, furthestColReached);
 }
 
 //get last layer of neurons outputs

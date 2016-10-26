@@ -115,6 +115,7 @@
     <ClCompile Include="Population.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Tester.cpp" />
+    <ClCompile Include="utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NeuralNetwork.h" />

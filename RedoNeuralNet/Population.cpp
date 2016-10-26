@@ -1,4 +1,5 @@
 #include <vector>
+#include <fstream>
 #include <algorithm>
 
 #include "Population.h"
@@ -14,7 +15,7 @@ public:
 	Population();
 	KD_NeuralNetworkClass::NeuralNetwork& getBest();
 	void breedBestNeuralNet();
-	bool testAll(std::vector<std::string> boardInfo);
+	bool testAll();
 
 private:
 	std::vector< KD_NeuralNetworkClass::NeuralNetwork> population;
@@ -29,6 +30,7 @@ private:
 
 
 };
+
 
 KD_PopulationClass::Population::Population() {///////////////////////////////////////////////////////////////GOOD
 	for (int i = 0; i < NUMBER_OF_NEURALNETS; i++) {
@@ -60,7 +62,7 @@ void KD_PopulationClass::Population::sortPopulation(bool sortHighLast) {////////
 	std::sort(population.begin(), population.end(), sortByFitnessLow);
 }
 
-bool KD_PopulationClass::Population::testAll(std::vector<std::string> boardInfo) {
+bool KD_PopulationClass::Population::testAll() {
 
 	//test each neural net if it has an unititialized fitness AKA was never tested
 	for (int i = 0; i < Population::population.size(); i++) {
@@ -68,7 +70,9 @@ bool KD_PopulationClass::Population::testAll(std::vector<std::string> boardInfo)
 			return true;//return true
 		}
 		if (population[i].getFitness() == -1) {
-			population[i].test(boardInfo);
+			population[i].test(getBoardInfo(NAME_OF_BOARD));
+			population[i].test(getBoardInfo(NAME_OF_BOARD2));
+			population[i].test(getBoardInfo(NAME_OF_BOARD3));
 		}
 	}
 	breedBestNeuralNet();
