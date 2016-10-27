@@ -285,7 +285,7 @@ void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {
 bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, position &aiPos) {//////////////////////////////////////////////////////////clean this 
 	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate] = openSpace;
 	switch (move) {
-	case goUp:
+	case goRight:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == openSpace) {
 			aiPos.y_cordinate++;
 			break;
@@ -298,7 +298,7 @@ bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, positio
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate + 1] == enemy)
 			return false;//Dead
 		break;
-	case goDown:
+	case goLeft:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate - 1] == openSpace) {
 			aiPos.y_cordinate--;
 			break;
@@ -310,7 +310,7 @@ bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, positio
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate - 1] == enemy)
 			return false;//Dead
 		break;
-	case goLeft:
+	case goUp:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate - 1][aiPos.y_cordinate] == openSpace) {
 			aiPos.x_cordinate--;
 			break;
@@ -322,7 +322,7 @@ bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, positio
 		else if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate - 1][aiPos.y_cordinate] == enemy)
 			return false;//Dead
 		break;
-	case goRight:
+	case goDown:
 		if (KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate + 1][aiPos.y_cordinate] == openSpace) {
 			aiPos.x_cordinate++;
 			break;

@@ -5,3 +5,6 @@ how to save best NeuralNet or all neural nets
 
 
 only mutute X% of the genes, not all of them
+
+add way to detect if ai just moves up, then down || right then left ///It is stuck in loop
+	//in addition, if it does make a repeated move... make it choose the 2nd best option or something else... dont make it just stop/////ONLY  DO THIS IF THE BEST NET STILL INCORPARATES THIS FEATURE

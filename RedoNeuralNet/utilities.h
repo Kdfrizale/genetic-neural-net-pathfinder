@@ -36,12 +36,14 @@ const double MUTATE_FACTOR = 0.2;//.15
 const int SIZE_OF_BOARD = 10;
 const int NUMBER_OF_BLOCKS_ABLE_TO_SEE = (sqrt(NUMBER_OF_INPUTS) - 1) / 2;
 const int NUMBER_OF_ALLOWED_MOVES = 50; // amount of moves it should take + C or times K
-const int SATISFIED_SCORE = 40;
+const int SATISFIED_SCORE = 1500;
 const int NUMBER_OF_TRIALS_PER_NET = 50;
 
 const std::string NAME_OF_BOARD = "Testdata.txt";
 const std::string NAME_OF_BOARD2 = "Testdata2.txt";
 const std::string NAME_OF_BOARD3 = "Testdata3.txt";
+const std::string NAME_OF_BOARD4 = "Testdata4.txt";
+const std::string NAME_OF_BOARD5 = "Testdata5.txt";
 
 
 

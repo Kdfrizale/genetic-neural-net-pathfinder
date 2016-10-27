@@ -34,4 +34,6 @@ void KD_TesterClass::Tester::displayBestNeuralNet(KD_PopulationClass::Population
 	population.getBest().displayProcess(getBoardInfo(NAME_OF_BOARD));//show end result
 	population.getBest().displayProcess(getBoardInfo(NAME_OF_BOARD2));
 	population.getBest().displayProcess(getBoardInfo(NAME_OF_BOARD3));
+	population.getBest().displayProcess(getBoardInfo(NAME_OF_BOARD4));
+	population.getBest().displayProcess(getBoardInfo(NAME_OF_BOARD5));
 }
