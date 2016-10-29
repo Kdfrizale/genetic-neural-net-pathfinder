@@ -6,7 +6,7 @@
 
 
 enum boardObjects { enemy = -10, outOfBounds = -5, block = 0, ai = 1, openSpace = 5,  goal = 100 };///////Change double value of these to increase nets performance differentiation
-enum movmentDirection { goUp, goDown, goLeft, goRight };
+enum movementDirection { goUp, goDown, goLeft, goRight };
 
 
 struct position {
@@ -45,6 +45,8 @@ const std::string NAME_OF_BOARD3 = "Testdata3.txt";
 const std::string NAME_OF_BOARD4 = "Testdata4.txt";
 const std::string NAME_OF_BOARD5 = "Testdata5.txt";
 
+const bool SAVE_POPULATION = true;
+const bool LOAD_POPULATION = false;
 
 
 

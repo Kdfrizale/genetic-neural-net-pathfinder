@@ -17,7 +17,7 @@ public:
 	void test(std::vector<std::string> boardInfo);
 	std::vector<double> getOutputs();
 	void giveInputs(std::vector<double> inputs);
-	std::vector<movmentDirection> displayProcess(std::vector<std::string> boardInfo);
+	std::vector<movementDirection> displayProcess(std::vector<std::string> boardInfo);
 	std::vector<std::vector<KD_NeuronClass::Neuron>> m_layers;
 
 	boardObjects theGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
@@ -25,9 +25,9 @@ public:
 private:
 	double fitness;
 	void initializeTheGameBoard(std::vector<std::string> boardInfo);
-	bool moveAi(movmentDirection move, position &aiPos);
+	bool moveAi(movementDirection move, position &aiPos);
 
-	movmentDirection getMove();
+	movementDirection getMove();
 
 
 };
@@ -150,7 +150,7 @@ void KD_NeuralNetworkClass::NeuralNetwork::test(std::vector<std::string> boardIn
 		giveInputs(boardInfoAvailableToAI);
 
 		//get output of net;; and decide on direction to move
-		movmentDirection aiMove = getMove();
+		movementDirection aiMove = getMove();
 
 		//update ai pos
 		ableToContinue = moveAi(aiMove, aiPos);
@@ -211,8 +211,8 @@ void KD_NeuralNetworkClass::NeuralNetwork::giveInputs(std::vector<double> inputs
 	}
 }
 
-movmentDirection KD_NeuralNetworkClass::NeuralNetwork::getMove() {/////////////////////////////////////////////////GOOD
-	movmentDirection move;
+movementDirection KD_NeuralNetworkClass::NeuralNetwork::getMove() {/////////////////////////////////////////////////GOOD
+	movementDirection move;
 	int placeOfHighest = 0;
 	std::vector<double> outputs = getOutputs();
 
@@ -282,7 +282,7 @@ void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {
 	}
 }
 
-bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, position &aiPos) {//////////////////////////////////////////////////////////clean this 
+bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movementDirection move, position &aiPos) {//////////////////////////////////////////////////////////clean this 
 	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate] = openSpace;
 	switch (move) {
 	case goRight:
@@ -341,9 +341,9 @@ bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movmentDirection move, positio
 
 
 
-std::vector<movmentDirection> KD_NeuralNetworkClass::NeuralNetwork::displayProcess(std::vector<std::string> boardInfo) {
+std::vector<movementDirection> KD_NeuralNetworkClass::NeuralNetwork::displayProcess(std::vector<std::string> boardInfo) {
 	//just like test, but record each movement, and possible add to GUI
-	std::vector<movmentDirection> allMovesTaken;
+	std::vector<movementDirection> allMovesTaken;
 	initializeTheGameBoard(boardInfo);
 
 	int movesLeft = NUMBER_OF_ALLOWED_MOVES;
@@ -384,7 +384,7 @@ std::vector<movmentDirection> KD_NeuralNetworkClass::NeuralNetwork::displayProce
 		giveInputs(boardInfoAvailableToAI);
 
 		//get output of net;; and decide on direction to move
-		movmentDirection aiMove = getMove();
+		movementDirection aiMove = getMove();
 		allMovesTaken.push_back(aiMove);
 
 		//update ai pos

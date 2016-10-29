@@ -28,6 +28,10 @@ void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &p
 		count++;
 	}
 	bool cool = true;
+	//save the population
+	if (SAVE_POPULATION) {
+
+	}
 }
 
 void KD_TesterClass::Tester::displayBestNeuralNet(KD_PopulationClass::Population &population) {	
