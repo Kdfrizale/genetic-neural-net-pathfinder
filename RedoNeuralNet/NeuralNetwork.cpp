@@ -251,6 +251,17 @@ KD_NeuralNetworkClass::NeuralNetwork::NeuralNetwork(void) {
 }
 
 
+//go through each layer, each neuron, using the mutate genes function in Neuron
+void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {
+	for (std::vector<KD_NeuronClass::Neuron> &layer : m_layers) {
+		for (KD_NeuronClass::Neuron &neuron : layer) {
+			if ((rand() % 100) < MUTATION_CHANCE) {//Only mutate some of the neurons 
+				neuron.mutateInputWeights();
+			}
+		}
+	}
+}
+
 
 
 
@@ -260,15 +271,6 @@ KD_NeuralNetworkClass::NeuralNetwork::NeuralNetwork(void) {
 
 
 
-
-//go through each layer, each neuron, using the mutate genes function in Neuron
-void KD_NeuralNetworkClass::NeuralNetwork::mutateGenesOfNeurons() {
-	for (std::vector<KD_NeuronClass::Neuron> &layer : m_layers) {
-		for (KD_NeuronClass::Neuron &neuron : layer) {
-			neuron.mutateInputWeights();
-		}
-	}
-}
 
 bool KD_NeuralNetworkClass::NeuralNetwork::moveAi(movementDirection move, position &aiPos) {//////////////////////////////////////////////////////////clean this 
 	KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[aiPos.x_cordinate][aiPos.y_cordinate] = openSpace;

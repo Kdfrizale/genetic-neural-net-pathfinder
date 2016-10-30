@@ -31,6 +31,7 @@ const int NUMBER_OF_NEURONS_IN_HIDDEN_LAYER = (int)((NUMBER_OF_INPUTS + NUMBER_O
 const int NUMBER_OF_NEURALNETS = 50;//15
 const int NUMBER_OF_BREEDS_PER_TEST = 8;//2
 const double MUTATE_FACTOR = 0.2;//.15
+const double MUTATION_CHANCE = 50; //Percent chance a mutation will occur per neuron
 
 
 const int SIZE_OF_BOARD = 10;
