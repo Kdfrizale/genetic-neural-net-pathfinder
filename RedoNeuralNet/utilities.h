@@ -19,9 +19,9 @@ const int UNINITIALZIED = -1;
 
 const double FITNESS_CALIBRATOR_COL_REACHED = 10.0;//Value of reaching the right side
 const double FITNESS_CALIBRATOR_MOVES_REMAINING = 10.0;//Value of reaching the goal quickly
-const double FITNESS_CALIBRATOR_MOVES_TAKEN = 2.0;
-const double FITNESS_CALIBRATOR_DISTANCE_FROM_START = 4.0;
-const double FITNESS_CALIBRATOR_DISTANCE_FROM_GOAL = 10.0;
+const double FITNESS_CALIBRATOR_MOVES_TAKEN = 2.0;//Value of moving, and not standing still
+const double FITNESS_CALIBRATOR_DISTANCE_FROM_START = 4.0;//Value of moving away from start
+const double FITNESS_CALIBRATOR_DISTANCE_FROM_GOAL = 10.0;//Value of getting close to the Goal
 
 
 const int NUMBER_OF_OUTPUTS = 4;

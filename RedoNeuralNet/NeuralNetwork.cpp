@@ -78,29 +78,17 @@ boardObjects getBoardObjectFromStringVector(std::vector<std::string> &boardInfo)
 	return result;
 }
 //Create the board and what it contains
-void KD_NeuralNetworkClass::NeuralNetwork::initializeTheGameBoard(std::vector<std::string> boardInfo) {/////////////////////////////////////////////////////////////////fix this to accept outside input
+void KD_NeuralNetworkClass::NeuralNetwork::initializeTheGameBoard(std::vector<std::string> boardInfo) {
 	for (int i = 0; i < SIZE_OF_BOARD; i++) {
 		for (int j = 0; j < SIZE_OF_BOARD; j++) {
 			boardObjects temp = getBoardObjectFromStringVector(boardInfo);
 			KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = temp;
-
-			/*if ((i == SIZE_OF_BOARD - 1 || j == SIZE_OF_BOARD - 1) || ( i ==0 || j ==0))
-				KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = outOfBounds;
-			else if(i ==4 || j ==4)
-				KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = block;
-			else 
-				KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[i][j] = openSpace;
-			*/
 		}
 	}
-	//KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2][SIZE_OF_BOARD / 2] = ai;
-
-	//KD_NeuralNetworkClass::NeuralNetwork::theGameBoard[SIZE_OF_BOARD / 2 + 2][SIZE_OF_BOARD / 2 -1] = goal;
-
 }
 
 //Calculate fitness with Weighted preferences
-double calculateFitness(int distanceFromGoal, int movesRemaining, int movesTaken, int distanceFromStart, int furthestColReached) {///////GOOD
+double calculateFitness(int distanceFromGoal, int movesRemaining, int movesTaken, int distanceFromStart, int furthestColReached) {
 	double result = (FITNESS_CALIBRATOR_MOVES_REMAINING*movesRemaining + FITNESS_CALIBRATOR_COL_REACHED*furthestColReached
 		+ FITNESS_CALIBRATOR_MOVES_TAKEN*movesTaken + FITNESS_CALIBRATOR_DISTANCE_FROM_START*distanceFromStart
 		- FITNESS_CALIBRATOR_DISTANCE_FROM_GOAL*distanceFromGoal);
@@ -172,19 +160,16 @@ void KD_NeuralNetworkClass::NeuralNetwork::test(std::vector<std::string> boardIn
 	
 	//calculate fitness
 	bool atGoal = (aiPos.x_cordinate == goalPos.x_cordinate) && (aiPos.y_cordinate == goalPos.y_cordinate);
-	NeuralNetwork::fitness += (atGoal) ? calculateFitness(distanceFromGoal, movesLeft, movesTaken, distanceFromStart, furthestColReached) /////////////////////////////////////////////////////Verify this, does += work?
+	NeuralNetwork::fitness += (atGoal) ? calculateFitness(distanceFromGoal, movesLeft, movesTaken, distanceFromStart, furthestColReached)
 		: calculateFitness(distanceFromGoal, 0, movesTaken, distanceFromStart, furthestColReached);
 }
 
 //get last layer of neurons outputs
-std::vector<double> KD_NeuralNetworkClass::NeuralNetwork::getOutputs() {////////////////////////////////////////GOOD
-	
-	
-	///////////////////////////////////////////////////////////////////////////////////////for every neuron in net, add output value of layer above * connection weight
+std::vector<double> KD_NeuralNetworkClass::NeuralNetwork::getOutputs() {
 	int l = -1;//layer above number
 	for (std::vector<KD_NeuronClass::Neuron> &layer : m_layers) {
 		for (KD_NeuronClass::Neuron &neuron : layer) {
-			if (l != -1) {///////////////////////////////////////////////////////can simplify this by adding a ifInputNeuron to
+			if (l != -1) {
 				neuron.updateOutput(m_layers[l]);
 			}
 			else {
@@ -204,14 +189,14 @@ std::vector<double> KD_NeuralNetworkClass::NeuralNetwork::getOutputs() {////////
 
 
 //set the first layer neurons outout to equal inputs
-void KD_NeuralNetworkClass::NeuralNetwork::giveInputs(std::vector<double> inputs) {///////////////////////////////////GOOD---Is this reversed? shouldnt matter though
+void KD_NeuralNetworkClass::NeuralNetwork::giveInputs(std::vector<double> inputs) {
 	for (KD_NeuronClass::Neuron &neuron : m_layers.front()) {
 		neuron.setOutputValue(inputs.back());//set the value
 		inputs.pop_back();//remove the value
 	}
 }
 
-movementDirection KD_NeuralNetworkClass::NeuralNetwork::getMove() {/////////////////////////////////////////////////GOOD
+movementDirection KD_NeuralNetworkClass::NeuralNetwork::getMove() {
 	movementDirection move;
 	int placeOfHighest = 0;
 	std::vector<double> outputs = getOutputs();
@@ -233,7 +218,7 @@ movementDirection KD_NeuralNetworkClass::NeuralNetwork::getMove() {/////////////
 	return move;
 }
 
-std::vector<KD_NeuronClass::Neuron> createInputLayer(int numberOfNeurons) {////////////////////////////////////////////GOOD
+std::vector<KD_NeuronClass::Neuron> createInputLayer(int numberOfNeurons) {
 	std::vector<KD_NeuronClass::Neuron> result;
 	for (int i = 0; i < numberOfNeurons; i++) {
 		KD_NeuronClass::Neuron temp = KD_NeuronClass::Neuron();//set Neurons above layer to null
@@ -242,7 +227,7 @@ std::vector<KD_NeuronClass::Neuron> createInputLayer(int numberOfNeurons) {/////
 	return result;
 }
 
-std::vector<KD_NeuronClass::Neuron> createRandomLayer(int numberOfNeurons, std::vector<KD_NeuronClass::Neuron> aLayerAbove) {////////////////////////////GOOD
+std::vector<KD_NeuronClass::Neuron> createRandomLayer(int numberOfNeurons, std::vector<KD_NeuronClass::Neuron> aLayerAbove) {
 	std::vector<KD_NeuronClass::Neuron> result;
 	for (int i = 0; i < numberOfNeurons; i++) {
 		KD_NeuronClass::Neuron temp = KD_NeuronClass::Neuron(aLayerAbove);
@@ -251,8 +236,8 @@ std::vector<KD_NeuronClass::Neuron> createRandomLayer(int numberOfNeurons, std::
 	return result;
 }
 
-KD_NeuralNetworkClass::NeuralNetwork::NeuralNetwork(void) {/////////////////////////////////////////////////////////GOOD
-														   //add the input layer
+KD_NeuralNetworkClass::NeuralNetwork::NeuralNetwork(void) {
+	//add the input layer
 	m_layers.push_back(createInputLayer(NUMBER_OF_INPUTS));
 
 	//add all the hidden layers
@@ -264,6 +249,9 @@ KD_NeuralNetworkClass::NeuralNetwork::NeuralNetwork(void) {/////////////////////
 	//set Fitness to UNINITIALIZED
 	fitness = UNINITIALZIED;
 }
+
+
+
 
 
 ///////////////////////////////////////WHats left///////////////////////////////////////////////////////////

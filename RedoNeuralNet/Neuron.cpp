@@ -16,7 +16,7 @@ public:
 	std::vector<Connection> Neuron::getInputWeights();
 	Neuron::Neuron(std::vector<KD_NeuronClass::Neuron> &aLayerAbove);
 	Neuron::Neuron();
-	std::vector<KD_NeuronClass::Neuron> *m_layerAbove;;//////////////////////////////////////////////Confirm this works with out being a pointer
+	std::vector<KD_NeuronClass::Neuron> *m_layerAbove;
 	double updateOutput(std::vector<KD_NeuronClass::Neuron> &layerAbove);
 	
 private:
@@ -44,7 +44,7 @@ std::vector<Connection> KD_NeuronClass::Neuron::getInputWeights() {
 
 
 
-KD_NeuronClass::Neuron::Neuron(std::vector<KD_NeuronClass::Neuron> &aLayerAbove) {//////////////////////////////////GOOD
+KD_NeuronClass::Neuron::Neuron(std::vector<KD_NeuronClass::Neuron> &aLayerAbove) {
 	m_layerAbove = &aLayerAbove;
 	for (int i = 0; i < aLayerAbove.size(); i++) {
 		Connection temp = (double)rand() / RAND_MAX;//0...1
@@ -53,7 +53,7 @@ KD_NeuronClass::Neuron::Neuron(std::vector<KD_NeuronClass::Neuron> &aLayerAbove)
 	m_outputValue = 0;
 }
 
-KD_NeuronClass::Neuron::Neuron() {//////////////////////////////////GOOD
+KD_NeuronClass::Neuron::Neuron() {
 	m_layerAbove = NULL;
 	isInputNeuron = true;
 	m_outputValue = 0;

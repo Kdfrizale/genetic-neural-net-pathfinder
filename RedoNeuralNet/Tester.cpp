@@ -18,16 +18,14 @@ public:
 private:
 };
 
+//Test each neural net in the population, mutating/breeding after every test cycle
 void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &population) {
 	bool satisfied = false;
 	int count = 0;
-	while (!satisfied && count < NUMBER_OF_TRIALS_PER_NET) {////////////reduce this to one
+	while (!satisfied && count < NUMBER_OF_TRIALS_PER_NET) {
 		satisfied = population.testAll();
-
-		//displayBestNeuralNet(population);
 		count++;
 	}
-	bool cool = true;
 	//save the population
 	if (SAVE_POPULATION) {
 
