@@ -26,7 +26,7 @@ private:
 	void initializeTheGameBoard(std::vector<std::string> boardInfo);
 	bool moveAi(movementDirection move, position &aiPos);
 
-	movementDirection getMove();
+	movementDirection getMove(std::vector<movementDirection> &allMovesTaken);
 
 
 };
@@ -128,25 +128,53 @@ void KD_NeuralNetworkClass::NeuralNetwork::giveInputs(std::vector<double> inputs
 	}
 }
 
-movementDirection KD_NeuralNetworkClass::NeuralNetwork::getMove() {
+movementDirection getOpposite(movementDirection moveGiven) {
+	switch (moveGiven) {
+	case goUp: return goDown; break;
+	case goDown: return goUp; break;
+	case goLeft: return goRight; break;
+	case goRight: return goLeft; break;
+	}
+}
+
+movementDirection KD_NeuralNetworkClass::NeuralNetwork::getMove(std::vector<movementDirection> &allMovesTaken) {
 	movementDirection move;
 	int placeOfHighest = 0;
 	std::vector<double> outputs = getOutputs();
+	bool acceptableMove = false;
 
 	//get largest output
-	double highestValue = *std::max_element(outputs.begin(), outputs.end());
-	for (int i = 0; i < outputs.size(); i++) {
-		if (outputs.at(i) == highestValue) {
-			placeOfHighest = i;
+	while (!acceptableMove) {
+		acceptableMove = true;
+		double highestValue = *std::max_element(outputs.begin(), outputs.end());
+		for (int i = 0; i < outputs.size(); i++) {
+			if (outputs.at(i) == highestValue) {
+				placeOfHighest = i;
+				
+			}
 		}
-	}
+		outputs.erase(outputs.begin() + placeOfHighest);//get rid of choice
 
-	switch (placeOfHighest) {
-	case 0: move = goUp; break;
-	case 1: move = goDown; break;
-	case 2: move = goLeft; break;
-	case 3: move = goRight; break;
+		switch (placeOfHighest) {
+		case 0: move = goUp; break;
+		case 1: move = goDown; break;
+		case 2: move = goLeft; break;
+		case 3: move = goRight; break;
+		}
+		//pick different move
+
+
+
+		//Below does not work
+
+		/*if (allMovesTaken.size() >= 2) {
+			if ((move == allMovesTaken.at(allMovesTaken.size() - 2)) && (move == getOpposite(allMovesTaken.at(allMovesTaken.size() - 1)))) {////////////check this
+				acceptableMove = false;
+			}
+		}*/
 	}
+	
+
 	return move;
 }
 
@@ -240,8 +268,9 @@ std::vector<movementDirection> KD_NeuralNetworkClass::NeuralNetwork::test(std::v
 		giveInputs(boardInfoAvailableToAI);
 
 		//get output of net;; and decide on direction to move
-		movementDirection aiMove = getMove();
+		movementDirection aiMove = getMove(allMovesTaken);
 		allMovesTaken.push_back(aiMove);
+		
 
 		//update ai pos
 		ableToContinue = moveAi(aiMove, currentAiPos);

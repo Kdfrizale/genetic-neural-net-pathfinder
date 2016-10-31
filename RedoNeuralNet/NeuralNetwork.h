@@ -22,7 +22,7 @@ namespace KD_NeuralNetworkClass {
 	private:
 		double fitness;
 		void initializeTheGameBoard(std::vector<std::string> boardInfo);
-		movementDirection getMove();
+		movementDirection getMove(std::vector<movementDirection> &allMovesTaken);
 		bool moveAi(movementDirection move, position &aiPos);
 
 

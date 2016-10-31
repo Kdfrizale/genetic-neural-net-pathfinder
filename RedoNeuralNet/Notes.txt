@@ -1,7 +1,6 @@
 
 how to save best NeuralNet or all neural nets
 
-combine test() and display()..by adding bool parameter which determines if it should save moves or not/ if it calculates fitness or not
 
 add way to detect if ai just moves up, then down || right then left ///It is stuck in loop
 	//in addition, if it does make a repeated move... make it choose the 2nd best option or something else... dont make it just stop/////ONLY  DO THIS IF THE BEST NET STILL INCORPARATES THIS FEATURE
