@@ -19,9 +19,6 @@ namespace KD_PopulationClass {
 		void getCandidatesToKill();
 		void breed(KD_NeuralNetworkClass::NeuralNetwork &aParent, KD_NeuralNetworkClass::NeuralNetwork &bParent, KD_NeuralNetworkClass::NeuralNetwork &child);
 		void sortPopulation(bool sortHighLast);
-		KD_NeuralNetworkClass::NeuralNetwork takeOutRandomNetFromVector(std::vector< KD_NeuralNetworkClass::NeuralNetwork> &netToPullFrom);
 		KD_NeuralNetworkClass::NeuralNetwork pickRandomNetFromVector(std::vector< KD_NeuralNetworkClass::NeuralNetwork> &netToPullFrom);
-
-
 	};
 }

@@ -25,7 +25,6 @@ private:
 	void getCandidatesToKill();
 	void breed(KD_NeuralNetworkClass::NeuralNetwork &aParent, KD_NeuralNetworkClass::NeuralNetwork &bParent, KD_NeuralNetworkClass::NeuralNetwork &child);
 	void sortPopulation(bool sortHighLast);
-	KD_NeuralNetworkClass::NeuralNetwork takeOutRandomNetFromVector(std::vector< KD_NeuralNetworkClass::NeuralNetwork> &netToPullFrom);
 	KD_NeuralNetworkClass::NeuralNetwork pickRandomNetFromVector(std::vector< KD_NeuralNetworkClass::NeuralNetwork> &netToPullFrom);
 
 
@@ -36,12 +35,15 @@ KD_PopulationClass::Population::Population() {
 	if (LOAD_POPULATION) {///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////LOAD IN POPULATION
 
 	}
-	for (int i = 0; i < NUMBER_OF_NEURALNETS; i++) {
-		KD_NeuralNetworkClass::NeuralNetwork temp = KD_NeuralNetworkClass::NeuralNetwork();
-		population.push_back(temp);
+	else {
+		for (int i = 0; i < NUMBER_OF_NEURALNETS; i++) {
+			KD_NeuralNetworkClass::NeuralNetwork temp = KD_NeuralNetworkClass::NeuralNetwork();
+			population.push_back(temp);
+		}
 	}
 }
 
+//get the highest fitness Net in population
 KD_NeuralNetworkClass::NeuralNetwork& KD_PopulationClass::Population::getBest() {
 	sortPopulation(false);
 	return population.front();
@@ -66,13 +68,12 @@ void KD_PopulationClass::Population::sortPopulation(bool sortHighLast) {
 }
 
 bool KD_PopulationClass::Population::testAll() {
-
 	//test each neural net if it has an unititialized fitness AKA was never tested
 	for (int i = 0; i < Population::population.size(); i++) {
 		if (population[i].getFitness() >= SATISFIED_SCORE) {
 			return true;
 		}
-		if (population[i].getFitness() == -1) {
+		if (population[i].getFitness() == UNINITIALZIED) {
 			//population[i].test(getBoardInfo(NAME_OF_BOARD));
 			//population[i].test(getBoardInfo(NAME_OF_BOARD2));
 			//population[i].test(getBoardInfo(NAME_OF_BOARD3));
@@ -87,10 +88,7 @@ bool KD_PopulationClass::Population::testAll() {
 	return false;
 }
 
-
-
-
-//get worst 2 Candidates from sorted population....NUMBER_OF_BREEDS_PER_TEST
+//get worst N Candidates from sorted population....NUMBER_OF_BREEDS_PER_TEST
 void KD_PopulationClass::Population::getCandidatesToKill() {
 	sortPopulation(false);//sort Low last
 	for (int i = 0; i < NUMBER_OF_BREEDS_PER_TEST; i++) {
@@ -99,7 +97,7 @@ void KD_PopulationClass::Population::getCandidatesToKill() {
 	}
 }
 
-//Get the top four networks from sorted population...NUMBER_OF_BREEDS_PER_TEST *2
+//Get the top N*2 networks from sorted population...NUMBER_OF_BREEDS_PER_TEST *2
 void KD_PopulationClass::Population::getCandidatesToBreed() {
 	sortPopulation(true); // sort High last
 	for (int i = 0; i < NUMBER_OF_BREEDS_PER_TEST * 2; i++) {
@@ -114,7 +112,7 @@ void KD_PopulationClass::Population::breedBestNeuralNet() {
 	for (int i = 0; i < NUMBER_OF_BREEDS_PER_TEST; i++) {
 		KD_NeuralNetworkClass::NeuralNetwork aParent = pickRandomNetFromVector(candidatesToBreed);//randomly pick from candidatesToBreed
 		KD_NeuralNetworkClass::NeuralNetwork bParent = pickRandomNetFromVector(candidatesToBreed);
-		KD_NeuralNetworkClass::NeuralNetwork child = takeOutRandomNetFromVector(candidatesToKill);//randomly pick from (and remove from) candidatesToKill
+		KD_NeuralNetworkClass::NeuralNetwork child = pickRandomNetFromVector(candidatesToKill);//randomly pick from candidatesToKill
 		breed(aParent, bParent, child);
 	}
 	for (KD_NeuralNetworkClass::NeuralNetwork net : candidatesToBreed) {
@@ -124,9 +122,7 @@ void KD_PopulationClass::Population::breedBestNeuralNet() {
 	candidatesToKill.clear();
 }
 
-
-
-std::vector<KD_NeuronClass::Neuron> selectGenesFromLayer(int layerNum, KD_NeuralNetworkClass::NeuralNetwork &aParent, KD_NeuralNetworkClass::NeuralNetwork &bParent) {//////////////////////////Confirm its 50%
+std::vector<KD_NeuronClass::Neuron> selectGenesFromLayer(int layerNum, KD_NeuralNetworkClass::NeuralNetwork &aParent, KD_NeuralNetworkClass::NeuralNetwork &bParent) {
 	std::vector<KD_NeuronClass::Neuron> result;
 	const std::vector<KD_NeuronClass::Neuron> aParentLayer = aParent.m_layers[layerNum];
 	const std::vector<KD_NeuronClass::Neuron> bParentLayer = bParent.m_layers[layerNum];
@@ -143,42 +139,22 @@ std::vector<KD_NeuronClass::Neuron> selectGenesFromLayer(int layerNum, KD_Neural
 }
 
 //breed two nets together, and add the result back to the population
-void KD_PopulationClass::Population::breed(KD_NeuralNetworkClass::NeuralNetwork &aParent, KD_NeuralNetworkClass::NeuralNetwork &bParent, KD_NeuralNetworkClass::NeuralNetwork &child) {
-																																													   
+void KD_PopulationClass::Population::breed(KD_NeuralNetworkClass::NeuralNetwork &aParent, KD_NeuralNetworkClass::NeuralNetwork &bParent, KD_NeuralNetworkClass::NeuralNetwork &child) {																																		   
 	child.m_layers.clear();
 	for (int i = 0; i < aParent.m_layers.size(); i++) {
 		child.m_layers.push_back(selectGenesFromLayer(i, aParent, bParent));//Copy the layers of both parents
 	}
-	child.setFitness(-1);//Indicate it's new and needs testing
+	child.setFitness(UNINITIALZIED);//Indicate it's new and needs testing
 	child.mutateGenesOfNeurons();
 	population.push_back(child);
 }
-///////////////////////////Whats left/////////////////////////////////////////////
 
-
-
-
-
-
-
-
-
-
-
-//Selects one at ranom, Does remove from list
-KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::takeOutRandomNetFromVector(std::vector< KD_NeuralNetworkClass::NeuralNetwork> &netToPullFrom) {////////////////////Does not remove from list
-	int place = rand() % netToPullFrom.size();
-	KD_NeuralNetworkClass::NeuralNetwork result = netToPullFrom.at(place);
-	//netToPullFrom.erase(netToPullFrom.begin + place - 1);//remove the element cop
-	return result;
-}
-
-//Selects one at random, Does not remove from list
+//Selects one at random, Does remove from list
 KD_NeuralNetworkClass::NeuralNetwork KD_PopulationClass::Population::pickRandomNetFromVector(std::vector< KD_NeuralNetworkClass::NeuralNetwork> &netToPullFrom) {
 	int place = rand() % netToPullFrom.size();
 	KD_NeuralNetworkClass::NeuralNetwork result = netToPullFrom.at(place);
 	population.push_back(netToPullFrom.at(place));
-	netToPullFrom.erase(netToPullFrom.begin() + place);///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////confirm this
+	netToPullFrom.erase(netToPullFrom.begin() + place);
 	return result;
 }
 

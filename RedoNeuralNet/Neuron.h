@@ -16,7 +16,6 @@ namespace KD_NeuronClass {
 		Neuron::Neuron();
 		std::vector<Neuron> *m_layerAbove;
 		double updateOutput(std::vector<KD_NeuronClass::Neuron> &layerAbove);
-
 		
 	private:
 		std::vector<Connection> m_inputWeights;

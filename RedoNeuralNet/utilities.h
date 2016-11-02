@@ -5,15 +5,13 @@
 #include "Neuron.h"
 
 
-enum boardObjects { enemy = -10, outOfBounds = -5, block = 0, ai = 1, openSpace = 5,  goal = 100 };///////Change double value of these to increase nets performance differentiation
+enum boardObjects { enemy = -10, outOfBounds = -5, block = 0, ai = 1, openSpace = 5,  goal = 100 };//Change double value of these to increase nets performance differentiation between blocks
 enum movementDirection { goUp, goDown, goLeft, goRight };
-
 
 struct position {
 	int x_cordinate;
 	int y_cordinate;
 };
-
 
 const int UNINITIALZIED = -1;
 
@@ -36,7 +34,7 @@ const double MUTATION_CHANCE = 50; //Percent chance a mutation will occur per ne
 
 const int SIZE_OF_BOARD = 10;
 const int NUMBER_OF_BLOCKS_ABLE_TO_SEE = (sqrt(NUMBER_OF_INPUTS) - 1) / 2;
-const int NUMBER_OF_ALLOWED_MOVES = 50; // amount of moves it should take + C or times K
+const int NUMBER_OF_ALLOWED_MOVES = 50; //Max number of moves the AI is allowed to get to the goal
 const int SATISFIED_SCORE = 500;
 const int NUMBER_OF_TRIALS_PER_NET = 50;
 
@@ -49,10 +47,5 @@ const std::string NAME_OF_BOARD6 = "Testdata6.txt";
 
 const bool SAVE_POPULATION = true;
 const bool LOAD_POPULATION = false;
-
-
-
-//Fill in board
-
 
 std::vector<std::string> getBoardInfo(const std::string filename);

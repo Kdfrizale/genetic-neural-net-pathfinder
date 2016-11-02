@@ -4,7 +4,6 @@
 #include "Neuron.h"
 #include "utilities.h"
 
-//typedef std::vector<Neuron> Layer;
 namespace KD_NeuralNetworkClass {
 	class NeuralNetwork {
 	public:
@@ -16,7 +15,6 @@ namespace KD_NeuralNetworkClass {
 		std::vector<double> getOutputs();
 		void giveInputs(std::vector<double> inputs);
 		std::vector<std::vector<KD_NeuronClass::Neuron>> m_layers;
-
 		boardObjects theGameBoard[SIZE_OF_BOARD][SIZE_OF_BOARD];
 
 	private:
@@ -24,7 +22,5 @@ namespace KD_NeuralNetworkClass {
 		void initializeTheGameBoard(std::vector<std::string> boardInfo);
 		movementDirection getMove(std::vector<movementDirection> &allMovesTaken);
 		bool moveAi(movementDirection move, position &aiPos);
-
-
 	};
 }

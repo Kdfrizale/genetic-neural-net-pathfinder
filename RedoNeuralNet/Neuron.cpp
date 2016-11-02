@@ -23,7 +23,6 @@ private:
 	std::vector<Connection> m_inputWeights;
 	bool isInputNeuron;
 	double m_outputValue;
-	
 };
 
 double KD_NeuronClass::Neuron::getOutputValue() {
@@ -41,8 +40,6 @@ void KD_NeuronClass::Neuron::setInputWeights(std::vector<Connection> inputWeight
 std::vector<Connection> KD_NeuronClass::Neuron::getInputWeights() {
 	return m_inputWeights;
 }
-
-
 
 KD_NeuronClass::Neuron::Neuron(std::vector<KD_NeuronClass::Neuron> &aLayerAbove) {
 	m_layerAbove = &aLayerAbove;
@@ -78,10 +75,6 @@ double KD_NeuronClass::Neuron::updateOutput(std::vector<KD_NeuronClass::Neuron> 
 	}
 	return 0.0;
 }
-
-
-
-////////////////////////////////ONLY THIS LEFT//////////////////////////////////////////////////
 
 void KD_NeuronClass::Neuron::mutateInputWeights() {
 	//for each connection modify it by a random value
