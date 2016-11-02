@@ -33,9 +33,10 @@ void KD_TesterClass::Tester::testEachNeuralNet(KD_PopulationClass::Population &p
 }
 
 void KD_TesterClass::Tester::displayBestNeuralNet(KD_PopulationClass::Population &population) {	
-	population.getBest().test(getBoardInfo(NAME_OF_BOARD));//show end result
-	population.getBest().test(getBoardInfo(NAME_OF_BOARD2));
-	population.getBest().test(getBoardInfo(NAME_OF_BOARD3));
-	population.getBest().test(getBoardInfo(NAME_OF_BOARD4));
-	population.getBest().test(getBoardInfo(NAME_OF_BOARD5));
+	//population.getBest().test(getBoardInfo(NAME_OF_BOARD));//show end result
+	//population.getBest().test(getBoardInfo(NAME_OF_BOARD2));
+	//population.getBest().test(getBoardInfo(NAME_OF_BOARD3));
+	//population.getBest().test(getBoardInfo(NAME_OF_BOARD4));
+	//population.getBest().test(getBoardInfo(NAME_OF_BOARD5));
+	population.getBest().test(getBoardInfo(NAME_OF_BOARD6));
 }

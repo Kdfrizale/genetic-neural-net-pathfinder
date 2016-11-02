@@ -137,7 +137,7 @@ movementDirection getOpposite(movementDirection moveGiven) {
 	}
 }
 
-movementDirection KD_NeuralNetworkClass::NeuralNetwork::getMove(std::vector<movementDirection> &allMovesTaken) {
+movementDirection KD_NeuralNetworkClass::NeuralNetwork::getMove(std::vector<movementDirection> &allMovesTaken) {/////////////////////////////////////////////////////////////////////////////Clean this up/ Fix
 	movementDirection move;
 	int placeOfHighest = 0;
 	std::vector<double> outputs = getOutputs();

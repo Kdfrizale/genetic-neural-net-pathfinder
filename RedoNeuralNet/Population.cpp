@@ -73,11 +73,12 @@ bool KD_PopulationClass::Population::testAll() {
 			return true;
 		}
 		if (population[i].getFitness() == -1) {
-			population[i].test(getBoardInfo(NAME_OF_BOARD));
-			population[i].test(getBoardInfo(NAME_OF_BOARD2));
-			population[i].test(getBoardInfo(NAME_OF_BOARD3));
-			population[i].test(getBoardInfo(NAME_OF_BOARD4));
-			population[i].test(getBoardInfo(NAME_OF_BOARD5));
+			//population[i].test(getBoardInfo(NAME_OF_BOARD));
+			//population[i].test(getBoardInfo(NAME_OF_BOARD2));
+			//population[i].test(getBoardInfo(NAME_OF_BOARD3));
+			//population[i].test(getBoardInfo(NAME_OF_BOARD4));
+			//population[i].test(getBoardInfo(NAME_OF_BOARD5));
+			population[i].test(getBoardInfo(NAME_OF_BOARD6));
 		}
 	}
 	breedBestNeuralNet();
